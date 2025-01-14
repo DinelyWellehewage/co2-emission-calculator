@@ -16,51 +16,71 @@ public class CO2EmissionService {
         this.distanceService = distanceService;
     }
 
-
     public double calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
-        List<List<Double>> startCityCoordinates = cityService.getCityCoordinates(startCity);
-        List<List<Double>> endCityCoordinates = cityService.getCityCoordinates(endCity);
+        VehicleType vehicleType = handleTransportationMethod(transportationMethod);
 
         System.out.println("Start City " + startCity + " Coordinates ");
-        List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity, startCityCoordinates);
+        List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity);
         System.out.println("End City " + endCity + " Coordinates ");
-        List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity, endCityCoordinates);
+        List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity);
 
-        List<List<Double>> coordinates = new ArrayList<>();
-        coordinates.add(selectedStartCityCoordinates);
-        coordinates.add(selectedEndCityCoordinates);
-        double distance = getDistance(coordinates);
 
-        double emission = calculateEmissions(distance, handleTransportationMethod(transportationMethod));
+        double distance = getDistance(selectedStartCityCoordinates,selectedEndCityCoordinates);
+
+        double emission = calculateEmissions(distance,vehicleType );
         System.out.println(emission);
         return emission;
 
     }
 
-    private VehicleType handleTransportationMethod(String transportationMethod){
+    private List<Double> selectCityCoordinate(String cityName){
+        List<List<Double>> cityCoordinates = cityService.getCityCoordinates(cityName);
+        if (cityCoordinates.isEmpty()){
+            throw new IllegalArgumentException("No coordinates found for city: "+ cityName);
+        }
+        System.out.println(cityName + " Coordinates ");
+        displayCityCoordinates(cityCoordinates);
+        int cityIndex = getUserSelectedIndex(cityCoordinates.size());
+        return cityCoordinates.get(cityIndex);
+    }
+
+    private int getUserSelectedIndex(int maxIndex){
+        Scanner scanner = new Scanner(System.in);
+        int selectedIndex;
+        while (true){
+            System.out.println("Select a coordinate (0 to " +maxIndex + "): (enter index):");
+            try {
+                selectedIndex = scanner.nextInt();
+                if (selectedIndex >= 0 && selectedIndex<maxIndex){
+                    break;
+                }else {
+                    System.out.println("Invalid Index. Try again.");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number");
+                scanner.nextLine();
+            }
+        }
+        return selectedIndex;
+    }
+
+    private VehicleType handleTransportationMethod(String transportationMethod) {
         try {
-            VehicleType vehicleType = VehicleType.valueOf(transportationMethod.toUpperCase().replace("-", "_"));
-            return vehicleType;
-        }catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("Invalid transport method");
+            return VehicleType.valueOf(transportationMethod.toUpperCase().replace("-", "_"));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid transport method: "+ transportationMethod);
         }
     }
 
-    private double getDistance(List<List<Double>> coordinates) {
-
+    private double getDistance(List<Double> selectedStartCityCoordinates,List<Double> selectedEndCityCoordinates) {
+        List<List<Double>> coordinates = new ArrayList<>();
+        coordinates.add(selectedStartCityCoordinates);
+        coordinates.add(selectedEndCityCoordinates);
         double distance = distanceService.getDistanceMatrix(coordinates);
         return distance;
     }
 
-    private List<Double> selectCityCoordinate(String city, List<List<Double>> coordinates) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(city + " Coordinates ");
-        displayCityCoordinates(coordinates);
-        System.out.println("Select a coordinate for " + city + "(enter index):");
-        int cityIndex = scanner.nextInt();
-        return coordinates.get(cityIndex);
 
-    }
 
     private void displayCityCoordinates(List<List<Double>> coordinates) {
         for (int i = 0; i < coordinates.size(); i++) {
@@ -69,8 +89,8 @@ public class CO2EmissionService {
     }
 
     public double calculateEmissions(double distance, VehicleType vehicleType) {
-        double emission = (distance * vehicleType.getCo2Emission()) / 1000;
-        return emission / 1000;
+        double emissionInKg = (distance * vehicleType.getCo2Emission()) / (1000*1000);
+        return emissionInKg ;
     }
 
 

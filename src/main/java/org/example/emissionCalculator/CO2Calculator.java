@@ -15,7 +15,6 @@ public class CO2Calculator {
 
     public static void main(String[] args) {
 
-
         //handleUserInput();
         Map<String, String> arguments = parseArguments(args);
 
@@ -36,22 +35,22 @@ public class CO2Calculator {
         System.out.println("Your trip caused "+ co2Emission+ " of CO2-equivalent.");
     }
 
-    private static Map<String,String> parseArguments(String[] args){
-        Map<String,String> argsMap = new HashMap<>();
-        for (String arg:args){
-            if (arg.contains("=")){
+    private static Map<String, String> parseArguments(String[] args) {
+        Map<String, String> argsMap = new HashMap<>();
+        for (String arg : args) {
+            if (arg.contains("=")) {
                 String[] keyValue = arg.split("=");
-                if (keyValue.length==2){
-                    argsMap.put(keyValue[0],keyValue[1]);
+                if (keyValue.length == 2) {
+                    argsMap.put(keyValue[0], keyValue[1]);
                 }
             } else if (arg.startsWith("--")) {
                 String key = arg;
                 String value = null;
                 int index = Arrays.asList(args).indexOf(arg);
-                if (index+1<args.length && !args[index+1].startsWith("--")){
-                    value = args[index+1];
+                if (index + 1 < args.length && !args[index + 1].startsWith("--")) {
+                    value = args[index + 1];
                 }
-                argsMap.put(key,value);
+                argsMap.put(key, value);
             }
         }
         return argsMap;
@@ -69,5 +68,12 @@ public class CO2Calculator {
 
         System.out.println("Enter transportation method");
         String transportationMethod = scanner.nextLine();
+
+        HttpClientService httpClientService = new HttpClientService();
+        CityService cityService = new CityService(httpClientService);
+        DistanceService distanceService = new DistanceService(httpClientService);
+        CO2EmissionService co2EmissionService = new CO2EmissionService(cityService, distanceService);
+        double co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
+        System.out.println("Your trip caused " + co2Emission + " of CO2-equivalent.");
     }
 }

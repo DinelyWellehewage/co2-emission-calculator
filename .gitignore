@@ -39,3 +39,6 @@ build/
 
 .idea
 .env
+out
+target
+src/main/resources/META-INF/MANIFEST.MF
