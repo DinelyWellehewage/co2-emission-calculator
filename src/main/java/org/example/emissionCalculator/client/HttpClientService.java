@@ -4,11 +4,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class HttpClientService {
+
+    public static final String APIKEY = Optional.ofNullable(Dotenv.load().get("ORS_TOKEN"))
+            .orElseThrow(()-> new IllegalArgumentException("API key not found. Please set ORS_TOKEN variable"));
 
     private final HttpClient httpClient;
     ObjectMapper objectMapper = new ObjectMapper();
