@@ -7,9 +7,15 @@ import org.example.emissionCalculator.model.MatrixResponse;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static org.example.emissionCalculator.util.constant.AppConstant.MATRIX_BASE_URL;
+import static org.example.emissionCalculator.util.constant.AppConstant.PROFILE;
 
 public class DistanceService {
 
+    private static final Logger LOGGER = Logger.getLogger(DistanceService.class.getName());
     private HttpClientService httpClientService;
 
     public DistanceService(HttpClientService httpClientService){
@@ -17,19 +23,24 @@ public class DistanceService {
     }
 
     public double getDistanceMatrix(double[][] coordinates){
-        String matrixUrl = "https://api.openrouteservice.org/v2/matrix";
-        String profile = "driving-car";
-        String urlString = String.format("%s/%s",matrixUrl,profile);
+        String urlString = MATRIX_BASE_URL+PROFILE;
         ObjectMapper objectMapper = new ObjectMapper();
-        String payload = null;
-        try {
-            payload = objectMapper.writeValueAsString(Map.of("locations",coordinates,"metrics", List.of("distance")));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        MatrixResponse matrixResponse = httpClientService.sendPostRequest(urlString,payload,HttpClientService.APIKEY, MatrixResponse.class);
 
-        Double distance = matrixResponse.getDistances().get(0).get(1);
-        return distance;
+
+        try {
+            String payload = objectMapper.writeValueAsString(Map.of("locations",coordinates,"metrics", List.of("distance")));
+            MatrixResponse matrixResponse = httpClientService.sendPostRequest(urlString,payload,HttpClientService.APIKEY, MatrixResponse.class);
+            Double distance = matrixResponse.getDistances().get(0).get(1);
+            return distance;
+
+        } catch (JsonProcessingException e) {
+            LOGGER.log(Level.SEVERE,"Failed to serialize payload for MATRIX API",e);
+            throw new RuntimeException("Failed to serialize payload for MATRIX API",e);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE,"Error occurred while fetching distance matrix",e);
+            throw new RuntimeException("Error occurred while fetching distance matrix",e);
+        }
+
+
     }
 }
