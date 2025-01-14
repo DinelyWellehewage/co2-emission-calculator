@@ -20,6 +20,7 @@ public class CO2EmissionService {
     public void calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
         List<List<Double>> startCityCoordinates = cityService.getCityCoordinates(startCity);
         List<List<Double>> endCityCoordinates = cityService.getCityCoordinates(endCity);
+
         System.out.println("Start City " + startCity + " Coordinates ");
         List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity, startCityCoordinates);
         System.out.println("End City " + endCity + " Coordinates ");
@@ -29,9 +30,19 @@ public class CO2EmissionService {
         coordinates.add(selectedStartCityCoordinates);
         coordinates.add(selectedEndCityCoordinates);
         double distance = getDistance(coordinates);
-        double emission = calculateEmissions(distance, VehicleType.DIESEL_CAR_MEDIUM);
+
+        double emission = calculateEmissions(distance, handleTransportationMethod(transportationMethod));
         System.out.println(emission);
 
+    }
+
+    private VehicleType handleTransportationMethod(String transportationMethod){
+        try {
+            VehicleType vehicleType = VehicleType.valueOf(transportationMethod.toUpperCase().replace("-", "_"));
+            return vehicleType;
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid transport method");
+        }
     }
 
     private double getDistance(List<List<Double>> coordinates) {
