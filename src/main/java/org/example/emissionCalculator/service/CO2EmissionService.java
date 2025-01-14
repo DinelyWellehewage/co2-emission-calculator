@@ -17,7 +17,7 @@ public class CO2EmissionService {
     }
 
 
-    public void calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
+    public double calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
         List<List<Double>> startCityCoordinates = cityService.getCityCoordinates(startCity);
         List<List<Double>> endCityCoordinates = cityService.getCityCoordinates(endCity);
 
@@ -33,6 +33,7 @@ public class CO2EmissionService {
 
         double emission = calculateEmissions(distance, handleTransportationMethod(transportationMethod));
         System.out.println(emission);
+        return emission;
 
     }
 
