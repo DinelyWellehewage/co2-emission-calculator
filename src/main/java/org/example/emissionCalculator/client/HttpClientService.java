@@ -35,7 +35,7 @@ public class HttpClientService {
             throw new RuntimeException(e);
         }
     }
-    public <T> T sendPoseRequest(String urlString,String body,String apiKey,Class<T> responseType){
+    public <T> T sendPostRequest(String urlString,String body,String apiKey,Class<T> responseType){
         try {
             URI uri = URI.create(urlString);
             HttpRequest request = HttpRequest.newBuilder(uri)
