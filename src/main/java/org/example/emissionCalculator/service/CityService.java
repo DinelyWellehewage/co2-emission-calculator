@@ -1,7 +1,7 @@
 package org.example.emissionCalculator.service;
 
 import org.example.emissionCalculator.client.ApiClient;
-import org.example.emissionCalculator.model.GeoCodingResponse;
+import org.example.emissionCalculator.model.response.GeoCodingResponse;
 import org.example.emissionCalculator.util.exception.ApiClientException;
 
 import java.net.URLEncoder;

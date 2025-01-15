@@ -3,12 +3,11 @@ package org.example.emissionCalculator.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.emissionCalculator.client.ApiClient;
-import org.example.emissionCalculator.model.MatrixResponse;
+import org.example.emissionCalculator.model.response.MatrixResponse;
 import org.example.emissionCalculator.model.request.MatrixRequest;
 import org.example.emissionCalculator.util.exception.ApiClientException;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.example.emissionCalculator.util.constant.AppConstant.*;
 
