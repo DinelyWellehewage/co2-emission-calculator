@@ -42,7 +42,7 @@ public class DistanceService {
         try {
             String payload = buildRequestPayload(coordinates);
             MatrixResponse matrixResponse = apiClient.sendPostRequest(urlString, payload, ApiClient.APIKEY, MatrixResponse.class);
-            return matrixResponse.getDistances().getFirst().get(1);
+            return matrixResponse.getDistances().get(0).get(1);
         } catch (Exception e) {
             throw new ApiClientException("Error occurred while fetching distance matrix", e);
         }

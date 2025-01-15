@@ -42,6 +42,5 @@ public class CityService {
         } catch (Exception e) {
             throw new ApiClientException("Error fetching coordinates for city: " + e.getMessage());
         }
-
     }
 }
