@@ -21,16 +21,16 @@ public class DistanceService {
 
     /**
      * calculates the distance between two geographic coordinates using MATRIX API
-     *<p>
+     *
      *      This API retrieves the distance matrix. The distance between first and
      *      second coordinates in the provided list is extracted and returned.
      *      The Matrix API returns a distance matrix where the elements at [i][j]
      *      represents the distance from the i-th location the  j-th location.
+     *      https://giscience.github.io/openrouteservice/api-reference/endpoints/matrix/
      *
      *      Since the input list of coordinates contains only two locations (start and end),
      *      the matrix will be a 2x2 grid. The value at [0][1] corresponds to the distance
      *      from the first location (start) to the second location(end).
-     *</p>
      *
      * @param coordinates a list of geographic coordinates
      * @return the distance in meters between the first and second coordinates

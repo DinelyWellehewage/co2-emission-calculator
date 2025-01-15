@@ -32,8 +32,8 @@ public class CO2Calculator {
         DistanceService distanceService = new DistanceService(apiClient);
         CO2EmissionService co2EmissionService = new CO2EmissionService(cityService,distanceService);
 
-        double co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
-        System.out.println("Your trip caused "+ co2Emission+ " of CO2-equivalent.");
+        String co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
+        System.out.println("Your trip caused "+ co2Emission+ "kg of CO2-equivalent.");
     }
 
     private static Map<String, String> parseArguments(String[] args) {

@@ -17,7 +17,7 @@ public class CO2EmissionService {
         this.distanceService = distanceService;
     }
 
-    public double calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
+    public String calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
         VehicleType vehicleType = handleTransportationMethod(transportationMethod);
 
         List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity);
@@ -26,20 +26,18 @@ public class CO2EmissionService {
         double distance = getDistance(selectedStartCityCoordinates, selectedEndCityCoordinates);
 
         double emission = vehicleType.calculateEmission(distance);
-        System.out.println(emission);
-        return emission;
-
+        return String.format("%.1f", emission);
     }
 
     private List<Double> selectCityCoordinate(String cityName) {
-            List<List<Double>> cityCoordinates = cityService.getCityCoordinates(cityName);
-            if (cityCoordinates.isEmpty()) {
-                throw new ApiClientException("No coordinates found for city: " + cityName);
-            }
-            System.out.println(cityName + " Coordinates ");
-            displayCityCoordinates(cityCoordinates);
-            int cityIndex = getUserSelectedIndex(cityCoordinates.size());
-            return cityCoordinates.get(cityIndex);
+        List<List<Double>> cityCoordinates = cityService.getCityCoordinates(cityName);
+        if (cityCoordinates.isEmpty()) {
+            throw new ApiClientException("No coordinates found for city: " + cityName);
+        }
+        System.out.println(cityName + " Coordinates ");
+        displayCityCoordinates(cityCoordinates);
+        int cityIndex = getUserSelectedIndex(cityCoordinates.size());
+        return cityCoordinates.get(cityIndex);
     }
 
     private int getUserSelectedIndex(int maxIndex) {
