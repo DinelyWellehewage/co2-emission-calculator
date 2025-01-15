@@ -34,7 +34,7 @@ public class CityService {
                     GEOCODE_BASE_URL,
                     URLEncoder.encode(APIKEY, StandardCharsets.UTF_8),
                     URLEncoder.encode(cityName, StandardCharsets.UTF_8),
-                    URLEncoder.encode(LAYER_LOCALITY));
+                    URLEncoder.encode(LAYER_LOCALITY, StandardCharsets.UTF_8));
             GeoCodingResponse geoCodingResponse = apiClient.sendGetRequest(urlString, GeoCodingResponse.class);
             return Optional.ofNullable(geoCodingResponse)
                     .map(GeoCodingResponse::getFeatures)
@@ -43,9 +43,9 @@ public class CityService {
                             .map(feature -> feature.getGeometry().getCoordinates())
                             .collect(Collectors.toList()))
                     .orElse(Collections.emptyList());
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error fetching coordinates for city: " + cityName);
-            throw new ApiClientException(e.getMessage());
+            throw new ApiClientException("Error fetching coordinates for city: " + e.getMessage());
         }
 
     }
