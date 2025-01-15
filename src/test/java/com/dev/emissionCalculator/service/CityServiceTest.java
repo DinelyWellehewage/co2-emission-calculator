@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,13 +23,13 @@ class CityServiceTest {
     private CityService cityService;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         apiClient = Mockito.mock(ApiClient.class);
         cityService = new CityService(apiClient);
     }
 
     @Test
-    void getCityCoordinatesTest_Success(){
+    void getCityCoordinatesTest_Success() {
         String cityName = "Berlin";
         List<Double> list = Arrays.asList(13.407032, 52.524932);
         String country = "Germany";
@@ -47,19 +48,19 @@ class CityServiceTest {
         features.add(feature);
         geoCodingResponse.setFeatures(features);
 
-        when(apiClient.sendGetRequest(anyString(),eq(GeoCodingResponse.class))).thenReturn(geoCodingResponse);
+        when(apiClient.sendGetRequest(anyString(), eq(GeoCodingResponse.class))).thenReturn(geoCodingResponse);
 
         List<LocationInfo> result = cityService.getCityCoordinates(cityName);
-        Assertions.assertEquals(list,result.get(0).getCoordinates());
+        Assertions.assertEquals(list, result.get(0).getCoordinates());
     }
 
     @Test
-    void getCityCoordinatesTest_Failure(){
+    void getCityCoordinatesTest_Failure() {
         String cityName = "Unknown";
         GeoCodingResponse geoCodingResponse = new GeoCodingResponse();
         geoCodingResponse.setFeatures(Collections.emptyList());
 
-        when(apiClient.sendGetRequest(anyString(),eq(GeoCodingResponse.class))).thenReturn(geoCodingResponse);
+        when(apiClient.sendGetRequest(anyString(), eq(GeoCodingResponse.class))).thenReturn(geoCodingResponse);
 
         List<LocationInfo> result = cityService.getCityCoordinates(cityName);
         Assertions.assertTrue(result.isEmpty());

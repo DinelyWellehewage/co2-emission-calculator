@@ -1,5 +1,6 @@
 package com.dev.emissionCalculator.service;
 
+import com.dev.emissionCalculator.util.exception.InvalidInputException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dev.emissionCalculator.client.ApiClient;
@@ -8,6 +9,7 @@ import com.dev.emissionCalculator.model.request.MatrixRequest;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.dev.emissionCalculator.util.constant.AppConstant.*;
 
@@ -41,10 +43,27 @@ public class DistanceService {
         try {
             String payload = buildRequestPayload(coordinates);
             MatrixResponse matrixResponse = apiClient.sendPostRequest(urlString, payload, ApiClient.APIKEY, MatrixResponse.class);
-            return matrixResponse.getDistances().get(0).get(1);
+            List<List<Double>> distanceMatrix =  matrixResponse.getDistances();
+            List<List<Double>> filteredDistances = filterDistances(distanceMatrix);
+            if (!filteredDistances.isEmpty() && !filteredDistances.get(0).isEmpty()){
+                return filteredDistances.get(0).get(0);
+            }else {
+                throw new InvalidInputException("No valid distances found");
+            }
+        } catch (InvalidInputException e) {
+            throw new InvalidInputException(e.getMessage(),e);
         } catch (Exception e) {
             throw new ApiClientException("Error occurred while fetching distance matrix", e);
         }
+    }
+
+    private List<List<Double>> filterDistances(List<List<Double>> distanceMatrix) {
+        return distanceMatrix.stream()
+                .map(list->list.stream()
+                        .filter(value->value!=null&&value!=0.0)
+                        .collect(Collectors.toList()))
+                .filter(list-> !list.isEmpty())
+                .collect(Collectors.toList());
     }
 
     private String buildRequestPayload(List<List<Double>> coordinates) {

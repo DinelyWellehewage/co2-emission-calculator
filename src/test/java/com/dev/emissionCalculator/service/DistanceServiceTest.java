@@ -42,11 +42,4 @@ class DistanceServiceTest {
         assertEquals(expectedDistance,distance);
     }
 
-    @Test
-    void buildRequestPayload_Success(){
-        List<List<Double>> coordinates = List.of(List.of(10.007046,53.576158),List.of(13.407032,52.524932));
-
-
-    }
-
 }
