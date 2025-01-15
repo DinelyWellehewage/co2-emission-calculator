@@ -23,7 +23,7 @@ public enum VehicleType {
         this.vehicle = vehicle;
     }
 
-    public double calculateEmission(double distance){
+    public double calculateEmission(double distance) {
         return vehicle.calculateEmissions(distance);
     }
 }

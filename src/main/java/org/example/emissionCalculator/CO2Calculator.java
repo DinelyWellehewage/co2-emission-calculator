@@ -1,6 +1,6 @@
 package org.example.emissionCalculator;
 
-import org.example.emissionCalculator.client.HttpClient;
+import org.example.emissionCalculator.client.ApiClient;
 import org.example.emissionCalculator.service.CO2EmissionService;
 import org.example.emissionCalculator.service.CityService;
 import org.example.emissionCalculator.service.DistanceService;
@@ -28,9 +28,9 @@ public class CO2Calculator {
             return;
         }
 
-        HttpClient httpClient = new HttpClient();
-        CityService cityService = new CityService(httpClient);
-        DistanceService distanceService = new DistanceService(httpClient);
+        ApiClient apiClient = new ApiClient();
+        CityService cityService = new CityService(apiClient);
+        DistanceService distanceService = new DistanceService(apiClient);
         CO2EmissionService co2EmissionService = new CO2EmissionService(cityService,distanceService);
 
         double co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
@@ -71,9 +71,9 @@ public class CO2Calculator {
         System.out.println("Enter transportation method");
         String transportationMethod = scanner.nextLine();
 
-        HttpClient httpClient = new HttpClient();
-        CityService cityService = new CityService(httpClient);
-        DistanceService distanceService = new DistanceService(httpClient);
+        ApiClient apiClient = new ApiClient();
+        CityService cityService = new CityService(apiClient);
+        DistanceService distanceService = new DistanceService(apiClient);
         CO2EmissionService co2EmissionService = new CO2EmissionService(cityService, distanceService);
         double co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
         System.out.println("Your trip caused " + co2Emission + " of CO2-equivalent.");

@@ -23,7 +23,7 @@ public class CO2EmissionService {
         List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity);
 
 
-        double distance = getDistance(selectedStartCityCoordinates,selectedEndCityCoordinates);
+        double distance = getDistance(selectedStartCityCoordinates, selectedEndCityCoordinates);
 
         double emission = vehicleType.calculateEmission(distance);
         System.out.println(emission);
@@ -31,10 +31,10 @@ public class CO2EmissionService {
 
     }
 
-    private List<Double> selectCityCoordinate(String cityName){
+    private List<Double> selectCityCoordinate(String cityName) {
         List<List<Double>> cityCoordinates = cityService.getCityCoordinates(cityName);
-        if (cityCoordinates.isEmpty()){
-            throw new IllegalArgumentException("No coordinates found for city: "+ cityName);
+        if (cityCoordinates.isEmpty()) {
+            throw new IllegalArgumentException("No coordinates found for city: " + cityName);
         }
         System.out.println(cityName + " Coordinates ");
         displayCityCoordinates(cityCoordinates);
@@ -42,16 +42,16 @@ public class CO2EmissionService {
         return cityCoordinates.get(cityIndex);
     }
 
-    private int getUserSelectedIndex(int maxIndex){
+    private int getUserSelectedIndex(int maxIndex) {
         Scanner scanner = new Scanner(System.in);
         int selectedIndex;
-        while (true){
-            System.out.println("Select a coordinate (0 to " +maxIndex + "): (enter index):");
+        while (true) {
+            System.out.println("Select a coordinate (0 to " + maxIndex + "): (enter index):");
             try {
                 selectedIndex = scanner.nextInt();
-                if (selectedIndex >= 0 && selectedIndex<maxIndex){
+                if (selectedIndex >= 0 && selectedIndex < maxIndex) {
                     break;
-                }else {
+                } else {
                     System.out.println("Invalid Index. Try again.");
                 }
             } catch (Exception e) {
@@ -66,11 +66,11 @@ public class CO2EmissionService {
         try {
             return VehicleType.valueOf(transportationMethod.toUpperCase().replace("-", "_"));
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid transport method: "+ transportationMethod);
+            throw new IllegalArgumentException("Invalid transport method: " + transportationMethod);
         }
     }
 
-    private double getDistance(List<Double> selectedStartCityCoordinates,List<Double> selectedEndCityCoordinates) {
+    private double getDistance(List<Double> selectedStartCityCoordinates, List<Double> selectedEndCityCoordinates) {
         List<List<Double>> coordinates = new ArrayList<>();
         coordinates.add(selectedStartCityCoordinates);
         coordinates.add(selectedEndCityCoordinates);
@@ -79,13 +79,11 @@ public class CO2EmissionService {
     }
 
 
-
     private void displayCityCoordinates(List<List<Double>> coordinates) {
         for (int i = 0; i < coordinates.size(); i++) {
             System.out.println(i + " - " + coordinates.get(i));
         }
     }
-
 
 
 }
