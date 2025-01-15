@@ -32,7 +32,6 @@ public class CO2Calculator {
         DistanceService distanceService = new DistanceService(apiClient);
         UserInteractionService userInteractionService = new UserInteractionService();
         CO2EmissionService co2EmissionService = new CO2EmissionService(cityService,distanceService,userInteractionService);
-
         String co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
         System.out.println("Your trip caused "+ co2Emission+ "kg of CO2-equivalent.");
     }
