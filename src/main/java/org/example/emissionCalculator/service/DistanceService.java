@@ -26,7 +26,7 @@ public class DistanceService {
      *      second coordinates in the provided list is extracted and returned.
      *      The Matrix API returns a distance matrix where the elements at [i][j]
      *      represents the distance from the i-th location the  j-th location.
-     *      https://giscience.github.io/openrouteservice/api-reference/endpoints/matrix/
+     *      <a href="https://giscience.github.io/openrouteservice/api-reference/endpoints/matrix/">MATRIX API</a>
      *
      *      Since the input list of coordinates contains only two locations (start and end),
      *      the matrix will be a 2x2 grid. The value at [0][1] corresponds to the distance
@@ -42,9 +42,7 @@ public class DistanceService {
         try {
             String payload = buildRequestPayload(coordinates);
             MatrixResponse matrixResponse = apiClient.sendPostRequest(urlString, payload, ApiClient.APIKEY, MatrixResponse.class);
-
-            Double distance = matrixResponse.getDistances().get(0).get(1);
-            return distance;
+            return matrixResponse.getDistances().getFirst().get(1);
         } catch (Exception e) {
             throw new ApiClientException("Error occurred while fetching distance matrix", e);
         }

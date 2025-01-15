@@ -1,12 +1,10 @@
 package org.example.emissionCalculator.service;
 
 import org.example.emissionCalculator.model.VehicleType;
-import org.example.emissionCalculator.util.exception.ApiClientException;
 import org.example.emissionCalculator.util.exception.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class CO2EmissionService {
 
@@ -48,8 +46,8 @@ public class CO2EmissionService {
         List<List<Double>> coordinates = new ArrayList<>();
         coordinates.add(selectedStartCityCoordinates);
         coordinates.add(selectedEndCityCoordinates);
-        double distance = distanceService.getDistanceMatrix(coordinates);
-        return distance;
+        return distanceService.getDistanceMatrix(coordinates);
+
     }
 
     private VehicleType handleTransportationMethod(String transportationMethod) {
