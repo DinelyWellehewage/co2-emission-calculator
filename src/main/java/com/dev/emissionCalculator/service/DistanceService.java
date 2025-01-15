@@ -23,19 +23,15 @@ public class DistanceService {
 
     /**
      * calculates the distance between two geographic coordinates using MATRIX API
-     * <p>
-     * This API retrieves the distance matrix. The distance between first and
-     * second coordinates in the provided list is extracted and returned.
-     * The Matrix API returns a distance matrix where the elements at [i][j]
-     * represents the distance from the i-th location the  j-th location.
-     * <a href="https://giscience.github.io/openrouteservice/api-reference/endpoints/matrix/">MATRIX API</a>
-     * <p>
-     * Since the input list of coordinates contains only two locations (start and end),
-     * the matrix will be a 2x2 grid. The value at [0][1] corresponds to the distance
-     * from the first location (start) to the second location(end).
+     *
+     *
+     * @see <a href="https://giscience.github.io/openrouteservice/api-reference/endpoints/matrix/">MATRIX API Documentation</a>
+     * The MATRIX API allows to specify source and destination coordinates to calculate
+     * the distance between them.
+     * This method returns the calculated distance from the start city to end city
      *
      * @param coordinates a list of geographic coordinates
-     * @return the distance in meters between the first and second coordinates
+     * @return the distance in meters from source and destination coordinates
      */
 
     public double getDistanceMatrix(List<List<Double>> coordinates) {
@@ -60,7 +56,7 @@ public class DistanceService {
     private List<List<Double>> filterDistances(List<List<Double>> distanceMatrix) {
         return distanceMatrix.stream()
                 .map(list->list.stream()
-                        .filter(value->value!=null&&value!=0.0)
+                        .filter(value->value!=null)
                         .collect(Collectors.toList()))
                 .filter(list-> !list.isEmpty())
                 .collect(Collectors.toList());
@@ -72,6 +68,8 @@ public class DistanceService {
             MatrixRequest matrixRequest = new MatrixRequest();
             matrixRequest.setLocations(coordinates);
             matrixRequest.setMetrics(List.of(METRICS));
+            matrixRequest.setSources(List.of("0"));
+            matrixRequest.setDestinations(List.of("1"));
             return objectMapper.writeValueAsString(matrixRequest);
         } catch (JsonProcessingException e) {
             throw new ApiClientException("Error occurred while fetching distance matrix", e);
