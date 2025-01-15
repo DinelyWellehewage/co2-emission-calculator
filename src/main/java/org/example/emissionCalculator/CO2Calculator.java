@@ -24,7 +24,6 @@ public class CO2Calculator {
 
         if (startCity==null || endCity==null || transportationMethod==null){
             System.out.println("Usage: ./co2-calculator --start <startCity> --end <endCity> --transportation-method <vehicleType>");
-          //  handleUserInput();
             return;
         }
 
@@ -58,24 +57,4 @@ public class CO2Calculator {
         return argsMap;
     }
 
-    private static void handleUserInput() {
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter start city: ");
-        String startCity = scanner.nextLine();
-
-        System.out.println("Enter end city");
-        String endCity = scanner.nextLine();
-
-        System.out.println("Enter transportation method");
-        String transportationMethod = scanner.nextLine();
-
-        ApiClient apiClient = new ApiClient();
-        CityService cityService = new CityService(apiClient);
-        DistanceService distanceService = new DistanceService(apiClient);
-        CO2EmissionService co2EmissionService = new CO2EmissionService(cityService, distanceService);
-        double co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
-        System.out.println("Your trip caused " + co2Emission + " of CO2-equivalent.");
-    }
 }
