@@ -4,6 +4,7 @@ import org.example.emissionCalculator.client.ApiClient;
 import org.example.emissionCalculator.service.CO2EmissionService;
 import org.example.emissionCalculator.service.CityService;
 import org.example.emissionCalculator.service.DistanceService;
+import org.example.emissionCalculator.service.UserInteractionService;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -30,7 +31,8 @@ public class CO2Calculator {
         ApiClient apiClient = new ApiClient();
         CityService cityService = new CityService(apiClient);
         DistanceService distanceService = new DistanceService(apiClient);
-        CO2EmissionService co2EmissionService = new CO2EmissionService(cityService,distanceService);
+        UserInteractionService userInteractionService = new UserInteractionService();
+        CO2EmissionService co2EmissionService = new CO2EmissionService(cityService,distanceService,userInteractionService);
 
         String co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
         System.out.println("Your trip caused "+ co2Emission+ "kg of CO2-equivalent.");

@@ -34,7 +34,7 @@ public class ApiClient {
             HttpResponse<String> response = httpClient.send(request,HttpResponse.BodyHandlers.ofString());
             return handleResponse(response,responseType);
         } catch (Exception e) {
-            throw new ApiClientException(e.getMessage());
+            throw new ApiClientException(e.getMessage(),e);
         }
     }
     public <T> T sendPostRequest(String urlString,String body,String apiKey,Class<T> responseType){

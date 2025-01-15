@@ -2,6 +2,7 @@ package org.example.emissionCalculator.service;
 
 import org.example.emissionCalculator.model.VehicleType;
 import org.example.emissionCalculator.util.exception.ApiClientException;
+import org.example.emissionCalculator.util.exception.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,13 @@ public class CO2EmissionService {
 
     private CityService cityService;
     private DistanceService distanceService;
+    private UserInteractionService userInteractionService;
 
-    public CO2EmissionService(CityService cityService, DistanceService distanceService) {
+    public CO2EmissionService(CityService cityService, DistanceService distanceService,
+                              UserInteractionService userInteractionService) {
         this.cityService = cityService;
         this.distanceService = distanceService;
+        this.userInteractionService = userInteractionService;
     }
 
     public String calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
@@ -24,49 +28,21 @@ public class CO2EmissionService {
         List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity);
 
         double distance = getDistance(selectedStartCityCoordinates, selectedEndCityCoordinates);
-
         double emission = vehicleType.calculateEmission(distance);
+
         return String.format("%.1f", emission);
     }
 
     private List<Double> selectCityCoordinate(String cityName) {
         List<List<Double>> cityCoordinates = cityService.getCityCoordinates(cityName);
         if (cityCoordinates.isEmpty()) {
-            throw new ApiClientException("No coordinates found for city: " + cityName);
+            throw new InvalidInputException("No coordinates found for city: " + cityName);
         }
         System.out.println(cityName + " Coordinates ");
-        displayCityCoordinates(cityCoordinates);
-        int cityIndex = getUserSelectedIndex(cityCoordinates.size());
+        int cityIndex = userInteractionService.displayCityCoordinates(cityCoordinates);
         return cityCoordinates.get(cityIndex);
     }
 
-    private int getUserSelectedIndex(int maxIndex) {
-        Scanner scanner = new Scanner(System.in);
-        int selectedIndex;
-        while (true) {
-            System.out.println("Select a coordinate (0 to " + maxIndex + "): (enter index):");
-            try {
-                selectedIndex = scanner.nextInt();
-                if (selectedIndex >= 0 && selectedIndex < maxIndex) {
-                    break;
-                } else {
-                    System.out.println("Invalid Index. Try again.");
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a number");
-                scanner.nextLine();
-            }
-        }
-        return selectedIndex;
-    }
-
-    private VehicleType handleTransportationMethod(String transportationMethod) {
-        try {
-            return VehicleType.valueOf(transportationMethod.toUpperCase().replace("-", "_"));
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid transport method: " + transportationMethod);
-        }
-    }
 
     private double getDistance(List<Double> selectedStartCityCoordinates, List<Double> selectedEndCityCoordinates) {
         List<List<Double>> coordinates = new ArrayList<>();
@@ -76,12 +52,12 @@ public class CO2EmissionService {
         return distance;
     }
 
-
-    private void displayCityCoordinates(List<List<Double>> coordinates) {
-        for (int i = 0; i < coordinates.size(); i++) {
-            System.out.println(i + " - " + coordinates.get(i));
+    private VehicleType handleTransportationMethod(String transportationMethod) {
+        try {
+            return VehicleType.valueOf(transportationMethod.toUpperCase().replace("-", "_"));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid transport method: " + transportationMethod);
         }
     }
-
 
 }
