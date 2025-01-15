@@ -19,15 +19,13 @@ public class CO2EmissionService {
     public double calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
         VehicleType vehicleType = handleTransportationMethod(transportationMethod);
 
-        System.out.println("Start City " + startCity + " Coordinates ");
         List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity);
-        System.out.println("End City " + endCity + " Coordinates ");
         List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity);
 
 
         double distance = getDistance(selectedStartCityCoordinates,selectedEndCityCoordinates);
 
-        double emission = calculateEmissions(distance,vehicleType );
+        double emission = vehicleType.calculateEmission(distance);
         System.out.println(emission);
         return emission;
 
@@ -88,10 +86,6 @@ public class CO2EmissionService {
         }
     }
 
-    public double calculateEmissions(double distance, VehicleType vehicleType) {
-        double emissionInKg = (distance * vehicleType.getCo2Emission()) / (1000*1000);
-        return emissionInKg ;
-    }
 
 
 }

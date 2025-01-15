@@ -1,6 +1,6 @@
 package org.example.emissionCalculator.service;
 
-import org.example.emissionCalculator.client.HttpClientService;
+import org.example.emissionCalculator.client.HttpClient;
 import org.example.emissionCalculator.model.GeoCodingResponse;
 
 import java.net.URLEncoder;
@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static org.example.emissionCalculator.client.HttpClientService.APIKEY;
+import static org.example.emissionCalculator.client.HttpClient.APIKEY;
 import static org.example.emissionCalculator.util.constant.AppConstant.GEOCODE_BASE_URL;
 import static org.example.emissionCalculator.util.constant.AppConstant.LAYER_LOCALITY;
 
@@ -20,10 +20,10 @@ public class CityService {
 
     private static final Logger LOGGER = Logger.getLogger(CityService.class.getName());
 
-    private HttpClientService httpClientService;
+    private HttpClient httpClient;
 
-    public CityService(HttpClientService httpClientService) {
-        this.httpClientService = httpClientService;
+    public CityService(HttpClient httpClient) {
+        this.httpClient = httpClient;
     }
 
     public List<List<Double>> getCityCoordinates(String cityName) {
@@ -34,7 +34,7 @@ public class CityService {
                     URLEncoder.encode(APIKEY, StandardCharsets.UTF_8),
                     URLEncoder.encode(cityName, StandardCharsets.UTF_8),
                     URLEncoder.encode(LAYER_LOCALITY));
-            GeoCodingResponse geoCodingResponse = httpClientService.sendGetRequest(urlString, GeoCodingResponse.class);
+            GeoCodingResponse geoCodingResponse = httpClient.sendGetRequest(urlString, GeoCodingResponse.class);
             return Optional.ofNullable(geoCodingResponse)
                     .map(GeoCodingResponse::getFeatures)
                     .filter(features -> !features.isEmpty())

@@ -2,28 +2,28 @@ package org.example.emissionCalculator.model;
 
 public enum VehicleType {
 
-    DIESEL_CAR_SMALL(142),
-    PETROL_CAR_SMALL(154),
-    PLUGIN_HYBRID_CAR_SMALL(73),
-    ELECTRIC_CAR_SMALL(50),
-    DIESEL_CAR_MEDIUM(171),
-    PETROL_CAR_MEDIUM(192),
-    PLUGIN_HYBRID_CAR_MEDIUM(110),
-    ELECTRIC_CAR_MEDIUM(58),
-    DIESEL_CAR_LARGE(209),
-    PETROL_CAR_LARGE(282),
-    PLUGIN_HYBRID_CAR_LARGE(126),
-    ELECTRIC_CAR_LARGE(73),
-    BUS(27),
-    TRAIN(6);
+    DIESEL_CAR_SMALL(new BasicVehicle(142)),
+    PETROL_CAR_SMALL(new BasicVehicle(154)),
+    PLUGIN_HYBRID_CAR_SMALL(new BasicVehicle(73)),
+    ELECTRIC_CAR_SMALL(new BasicVehicle(50)),
+    DIESEL_CAR_MEDIUM(new BasicVehicle(171)),
+    PETROL_CAR_MEDIUM(new BasicVehicle(192)),
+    PLUGIN_HYBRID_CAR_MEDIUM(new BasicVehicle(110)),
+    ELECTRIC_CAR_MEDIUM(new BasicVehicle(58)),
+    DIESEL_CAR_LARGE(new BasicVehicle(209)),
+    PETROL_CAR_LARGE(new BasicVehicle(282)),
+    PLUGIN_HYBRID_CAR_LARGE(new BasicVehicle(126)),
+    ELECTRIC_CAR_LARGE(new BasicVehicle(73)),
+    BUS(new BasicVehicle(27)),
+    TRAIN(new BasicVehicle(6));
 
-    private final int co2Emission;
+    private final Vehicle vehicle;
 
-    VehicleType(int co2Emission){
-        this.co2Emission = co2Emission;
+    VehicleType(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
-    public int getCo2Emission(){
-        return co2Emission;
+    public double calculateEmission(double distance){
+        return vehicle.calculateEmissions(distance);
     }
 }

@@ -2,7 +2,7 @@ package org.example.emissionCalculator.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.emissionCalculator.client.HttpClientService;
+import org.example.emissionCalculator.client.HttpClient;
 import org.example.emissionCalculator.model.MatrixResponse;
 
 import java.util.List;
@@ -16,10 +16,10 @@ import static org.example.emissionCalculator.util.constant.AppConstant.PROFILE;
 public class DistanceService {
 
     private static final Logger LOGGER = Logger.getLogger(DistanceService.class.getName());
-    private HttpClientService httpClientService;
+    private HttpClient httpClient;
 
-    public DistanceService(HttpClientService httpClientService) {
-        this.httpClientService = httpClientService;
+    public DistanceService(HttpClient httpClient) {
+        this.httpClient = httpClient;
     }
 
     public double getDistanceMatrix(List<List<Double>> coordinates) {
@@ -28,7 +28,7 @@ public class DistanceService {
 
         try {
             String payload = objectMapper.writeValueAsString(Map.of("locations", coordinates, "metrics", List.of("distance")));
-            MatrixResponse matrixResponse = httpClientService.sendPostRequest(urlString, payload, HttpClientService.APIKEY, MatrixResponse.class);
+            MatrixResponse matrixResponse = httpClient.sendPostRequest(urlString, payload, HttpClient.APIKEY, MatrixResponse.class);
             Double distance = matrixResponse.getDistances().get(0).get(1);
             return distance;
 
