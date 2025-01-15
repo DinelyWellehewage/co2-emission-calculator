@@ -21,21 +21,20 @@ public class DistanceService {
 
     /**
      * calculates the distance between two geographic coordinates using MATRIX API
-     *
-     *      This API retrieves the distance matrix. The distance between first and
-     *      second coordinates in the provided list is extracted and returned.
-     *      The Matrix API returns a distance matrix where the elements at [i][j]
-     *      represents the distance from the i-th location the  j-th location.
-     *      <a href="https://giscience.github.io/openrouteservice/api-reference/endpoints/matrix/">MATRIX API</a>
-     *
-     *      Since the input list of coordinates contains only two locations (start and end),
-     *      the matrix will be a 2x2 grid. The value at [0][1] corresponds to the distance
-     *      from the first location (start) to the second location(end).
+     * <p>
+     * This API retrieves the distance matrix. The distance between first and
+     * second coordinates in the provided list is extracted and returned.
+     * The Matrix API returns a distance matrix where the elements at [i][j]
+     * represents the distance from the i-th location the  j-th location.
+     * <a href="https://giscience.github.io/openrouteservice/api-reference/endpoints/matrix/">MATRIX API</a>
+     * <p>
+     * Since the input list of coordinates contains only two locations (start and end),
+     * the matrix will be a 2x2 grid. The value at [0][1] corresponds to the distance
+     * from the first location (start) to the second location(end).
      *
      * @param coordinates a list of geographic coordinates
      * @return the distance in meters between the first and second coordinates
-     *
-     * */
+     */
 
     public double getDistanceMatrix(List<List<Double>> coordinates) {
         String urlString = MATRIX_BASE_URL + PROFILE;
@@ -48,7 +47,7 @@ public class DistanceService {
         }
     }
 
-    private String buildRequestPayload(List<List<Double>> coordinates){
+    private String buildRequestPayload(List<List<Double>> coordinates) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             MatrixRequest matrixRequest = new MatrixRequest();
