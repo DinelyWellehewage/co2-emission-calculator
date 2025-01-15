@@ -1,14 +1,18 @@
 package com.dev.emissionCalculator.service;
 
+import com.dev.emissionCalculator.model.response.LocationInfo;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class UserInteractionService {
 
-    public int displayCityCoordinates(List<List<Double>> coordinates) {
+    public int displayCityCoordinates(List<LocationInfo> coordinates) {
         System.out.println("Available Coordinates: ");
         for (int i = 0; i < coordinates.size(); i++) {
-            System.out.println(i + " - " + coordinates.get(i));
+            String country = coordinates.get(i).getCountry();
+            String region = coordinates.get(i).getRegion();
+            System.out.println(i + " - " + coordinates.get(i).getCoordinates()+" Country: "+country+" ; Region: "+region);
         }
         return getUserSelectedIndex(coordinates.size());
     }

@@ -2,9 +2,7 @@ package com.dev.emissionCalculator.service;
 
 
 import com.dev.emissionCalculator.client.ApiClient;
-import com.dev.emissionCalculator.model.response.Feature;
-import com.dev.emissionCalculator.model.response.GeoCodingResponse;
-import com.dev.emissionCalculator.model.response.Geometry;
+import com.dev.emissionCalculator.model.response.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,20 +30,27 @@ class CityServiceTest {
     @Test
     void getCityCoordinatesTest_Success(){
         String cityName = "Berlin";
+        List<Double> list = Arrays.asList(13.407032, 52.524932);
+        String country = "Germany";
+        String region = "Berlin";
         GeoCodingResponse geoCodingResponse = new GeoCodingResponse();
         Geometry geometry = new Geometry();
-        List<Double> list = Arrays.asList(13.407032, 52.524932);
         geometry.setCoordinates(list);
+
+        Properties properties = new Properties();
+        properties.setCountry(country);
+        properties.setRegion(region);
         Feature feature = new Feature();
         feature.setGeometry(geometry);
+        feature.setProperties(properties);
         List<Feature> features = new ArrayList<>();
         features.add(feature);
         geoCodingResponse.setFeatures(features);
 
         when(apiClient.sendGetRequest(anyString(),eq(GeoCodingResponse.class))).thenReturn(geoCodingResponse);
 
-        List<List<Double>> coordinates = cityService.getCityCoordinates(cityName);
-        Assertions.assertEquals(list,coordinates.get(0));
+        List<LocationInfo> result = cityService.getCityCoordinates(cityName);
+        Assertions.assertEquals(list,result.get(0).getCoordinates());
     }
 
     @Test
@@ -56,8 +61,8 @@ class CityServiceTest {
 
         when(apiClient.sendGetRequest(anyString(),eq(GeoCodingResponse.class))).thenReturn(geoCodingResponse);
 
-        List<List<Double>> coordinates = cityService.getCityCoordinates(cityName);
-        Assertions.assertTrue(coordinates.isEmpty());
+        List<LocationInfo> result = cityService.getCityCoordinates(cityName);
+        Assertions.assertTrue(result.isEmpty());
 
     }
 

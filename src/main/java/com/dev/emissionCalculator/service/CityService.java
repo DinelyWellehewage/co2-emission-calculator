@@ -2,6 +2,7 @@ package com.dev.emissionCalculator.service;
 
 import com.dev.emissionCalculator.client.ApiClient;
 import com.dev.emissionCalculator.model.response.GeoCodingResponse;
+import com.dev.emissionCalculator.model.response.LocationInfo;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
 
 import java.net.URLEncoder;
@@ -23,7 +24,7 @@ public class CityService {
         this.apiClient = apiClient;
     }
 
-    public List<List<Double>> getCityCoordinates(String cityName) {
+    public List<LocationInfo> getCityCoordinates(String cityName) {
 
         try {
             String urlString = String.format("%s?api_key=%s&text=%s&layers=%s",
@@ -36,7 +37,11 @@ public class CityService {
                     .map(GeoCodingResponse::getFeatures)
                     .filter(features -> !features.isEmpty())
                     .map(features -> features.stream()
-                            .map(feature -> feature.getGeometry().getCoordinates())
+                            .map(feature -> new LocationInfo(
+                                    feature.getGeometry().getCoordinates(),
+                                    feature.getProperties().getCountry(),
+                                    feature.getProperties().getRegion()
+                            ))
                             .collect(Collectors.toList()))
                     .orElse(Collections.emptyList());
         } catch (Exception e) {

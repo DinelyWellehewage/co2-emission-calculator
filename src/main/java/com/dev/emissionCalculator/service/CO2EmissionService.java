@@ -1,6 +1,7 @@
 package com.dev.emissionCalculator.service;
 
 import com.dev.emissionCalculator.model.VehicleType;
+import com.dev.emissionCalculator.model.response.LocationInfo;
 import com.dev.emissionCalculator.util.exception.InvalidInputException;
 
 import java.util.ArrayList;
@@ -32,13 +33,14 @@ public class CO2EmissionService {
     }
 
     private List<Double> selectCityCoordinate(String cityName) {
-        List<List<Double>> cityCoordinates = cityService.getCityCoordinates(cityName);
+        List<LocationInfo> cityCoordinates = cityService.getCityCoordinates(cityName);
         if (cityCoordinates.isEmpty()) {
             throw new InvalidInputException("No coordinates found for city: " + cityName);
         }
         System.out.println(cityName + " Coordinates ");
         int cityIndex = userInteractionService.displayCityCoordinates(cityCoordinates);
-        return cityCoordinates.get(cityIndex);
+        LocationInfo selectedLocationInfo = cityCoordinates.get(cityIndex);
+        return selectedLocationInfo.getCoordinates();
     }
 
 
