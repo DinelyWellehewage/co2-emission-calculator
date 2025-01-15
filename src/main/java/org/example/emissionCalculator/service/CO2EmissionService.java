@@ -1,6 +1,7 @@
 package org.example.emissionCalculator.service;
 
 import org.example.emissionCalculator.model.VehicleType;
+import org.example.emissionCalculator.util.exception.ApiClientException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,6 @@ public class CO2EmissionService {
         List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity);
         List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity);
 
-
         double distance = getDistance(selectedStartCityCoordinates, selectedEndCityCoordinates);
 
         double emission = vehicleType.calculateEmission(distance);
@@ -32,14 +32,14 @@ public class CO2EmissionService {
     }
 
     private List<Double> selectCityCoordinate(String cityName) {
-        List<List<Double>> cityCoordinates = cityService.getCityCoordinates(cityName);
-        if (cityCoordinates.isEmpty()) {
-            throw new IllegalArgumentException("No coordinates found for city: " + cityName);
-        }
-        System.out.println(cityName + " Coordinates ");
-        displayCityCoordinates(cityCoordinates);
-        int cityIndex = getUserSelectedIndex(cityCoordinates.size());
-        return cityCoordinates.get(cityIndex);
+            List<List<Double>> cityCoordinates = cityService.getCityCoordinates(cityName);
+            if (cityCoordinates.isEmpty()) {
+                throw new ApiClientException("No coordinates found for city: " + cityName);
+            }
+            System.out.println(cityName + " Coordinates ");
+            displayCityCoordinates(cityCoordinates);
+            int cityIndex = getUserSelectedIndex(cityCoordinates.size());
+            return cityCoordinates.get(cityIndex);
     }
 
     private int getUserSelectedIndex(int maxIndex) {

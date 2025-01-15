@@ -1,5 +1,6 @@
 package org.example.emissionCalculator.client;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -9,6 +10,7 @@ import java.util.Optional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.example.emissionCalculator.util.exception.ApiClientException;
 
 public class ApiClient {
 
@@ -32,7 +34,7 @@ public class ApiClient {
             HttpResponse<String> response = httpClient.send(request,HttpResponse.BodyHandlers.ofString());
             return handleResponse(response,responseType);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ApiClientException(e.getMessage());
         }
     }
     public <T> T sendPostRequest(String urlString,String body,String apiKey,Class<T> responseType){
@@ -47,7 +49,7 @@ public class ApiClient {
             HttpResponse<String> response = httpClient.send(request,HttpResponse.BodyHandlers.ofString());
             return handleResponse(response,responseType);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ApiClientException("Error sending POST request " ,e);
         }
     }
 
@@ -57,10 +59,10 @@ public class ApiClient {
             try {
                 return objectMapper.readValue(response.body(),responseType);
             } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
+                throw new ApiClientException("Error processing JSON response",e);
             }
-        }else {
-            throw new RuntimeException("HTTP request failed with status code: "+response.statusCode() + ",Body: "+response.body());
+        } else {
+            throw new ApiClientException("HTTP request failed with status code: "+response.statusCode() + ",Body: "+response.body());
         }
     }
 }

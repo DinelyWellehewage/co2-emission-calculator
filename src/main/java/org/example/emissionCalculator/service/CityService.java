@@ -2,6 +2,7 @@ package org.example.emissionCalculator.service;
 
 import org.example.emissionCalculator.client.ApiClient;
 import org.example.emissionCalculator.model.GeoCodingResponse;
+import org.example.emissionCalculator.util.exception.ApiClientException;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -42,9 +43,10 @@ public class CityService {
                             .map(feature -> feature.getGeometry().getCoordinates())
                             .collect(Collectors.toList()))
                     .orElse(Collections.emptyList());
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error fetching coordinates for city: {0}" + cityName, e);
-            return Collections.emptyList();
+        }catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error fetching coordinates for city: " + cityName);
+            throw new ApiClientException(e.getMessage());
         }
+
     }
 }

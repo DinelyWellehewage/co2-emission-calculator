@@ -24,7 +24,7 @@ public class CO2Calculator {
 
         if (startCity==null || endCity==null || transportationMethod==null){
             System.out.println("Usage: ./co2-calculator --start <startCity> --end <endCity> --transportation-method <vehicleType>");
-            handleUserInput();
+          //  handleUserInput();
             return;
         }
 
