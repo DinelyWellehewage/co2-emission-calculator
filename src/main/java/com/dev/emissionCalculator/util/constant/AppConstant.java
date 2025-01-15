@@ -1,4 +1,4 @@
-package org.example.emissionCalculator.util.constant;
+package com.dev.emissionCalculator.util.constant;
 
 public class AppConstant {
 

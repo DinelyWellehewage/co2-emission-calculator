@@ -1,4 +1,4 @@
-package org.example.emissionCalculator.service;
+package com.dev.emissionCalculator.service;
 
 import java.util.List;
 import java.util.Scanner;

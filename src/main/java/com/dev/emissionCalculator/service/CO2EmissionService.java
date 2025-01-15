@@ -1,7 +1,7 @@
-package org.example.emissionCalculator.service;
+package com.dev.emissionCalculator.service;
 
-import org.example.emissionCalculator.model.VehicleType;
-import org.example.emissionCalculator.util.exception.InvalidInputException;
+import com.dev.emissionCalculator.model.VehicleType;
+import com.dev.emissionCalculator.util.exception.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.List;

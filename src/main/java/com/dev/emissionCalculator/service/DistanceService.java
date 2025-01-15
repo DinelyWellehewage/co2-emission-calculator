@@ -1,15 +1,15 @@
-package org.example.emissionCalculator.service;
+package com.dev.emissionCalculator.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.emissionCalculator.client.ApiClient;
-import org.example.emissionCalculator.model.response.MatrixResponse;
-import org.example.emissionCalculator.model.request.MatrixRequest;
-import org.example.emissionCalculator.util.exception.ApiClientException;
+import com.dev.emissionCalculator.client.ApiClient;
+import com.dev.emissionCalculator.model.response.MatrixResponse;
+import com.dev.emissionCalculator.model.request.MatrixRequest;
+import com.dev.emissionCalculator.util.exception.ApiClientException;
 
 import java.util.List;
 
-import static org.example.emissionCalculator.util.constant.AppConstant.*;
+import static com.dev.emissionCalculator.util.constant.AppConstant.*;
 
 public class DistanceService {
 

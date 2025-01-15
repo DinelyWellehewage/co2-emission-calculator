@@ -1,4 +1,4 @@
-package org.example.emissionCalculator.util.exception;
+package com.dev.emissionCalculator.util.exception;
 
 public class InvalidInputException extends RuntimeException {
     public InvalidInputException(String message) {

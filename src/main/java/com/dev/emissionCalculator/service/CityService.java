@@ -1,8 +1,8 @@
-package org.example.emissionCalculator.service;
+package com.dev.emissionCalculator.service;
 
-import org.example.emissionCalculator.client.ApiClient;
-import org.example.emissionCalculator.model.response.GeoCodingResponse;
-import org.example.emissionCalculator.util.exception.ApiClientException;
+import com.dev.emissionCalculator.client.ApiClient;
+import com.dev.emissionCalculator.model.response.GeoCodingResponse;
+import com.dev.emissionCalculator.util.exception.ApiClientException;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -10,9 +10,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import static org.example.emissionCalculator.client.ApiClient.APIKEY;
-import static org.example.emissionCalculator.util.constant.AppConstant.GEOCODE_BASE_URL;
-import static org.example.emissionCalculator.util.constant.AppConstant.LAYER_LOCALITY;
+import static com.dev.emissionCalculator.client.ApiClient.APIKEY;
+import static com.dev.emissionCalculator.util.constant.AppConstant.GEOCODE_BASE_URL;
+import static com.dev.emissionCalculator.util.constant.AppConstant.LAYER_LOCALITY;
 
 public class CityService {
 

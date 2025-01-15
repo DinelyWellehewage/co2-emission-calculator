@@ -1,4 +1,4 @@
-package org.example.emissionCalculator.model;
+package com.dev.emissionCalculator.model;
 
 public abstract class Vehicle {
 

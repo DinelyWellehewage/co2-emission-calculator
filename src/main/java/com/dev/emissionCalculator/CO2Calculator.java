@@ -1,15 +1,14 @@
-package org.example.emissionCalculator;
+package com.dev.emissionCalculator;
 
-import org.example.emissionCalculator.client.ApiClient;
-import org.example.emissionCalculator.service.CO2EmissionService;
-import org.example.emissionCalculator.service.CityService;
-import org.example.emissionCalculator.service.DistanceService;
-import org.example.emissionCalculator.service.UserInteractionService;
+import com.dev.emissionCalculator.client.ApiClient;
+import com.dev.emissionCalculator.service.CO2EmissionService;
+import com.dev.emissionCalculator.service.CityService;
+import com.dev.emissionCalculator.service.DistanceService;
+import com.dev.emissionCalculator.service.UserInteractionService;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class CO2Calculator {
 

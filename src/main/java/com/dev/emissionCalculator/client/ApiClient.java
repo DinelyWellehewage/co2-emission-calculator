@@ -1,6 +1,5 @@
-package org.example.emissionCalculator.client;
+package com.dev.emissionCalculator.client;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -10,7 +9,7 @@ import java.util.Optional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
-import org.example.emissionCalculator.util.exception.ApiClientException;
+import com.dev.emissionCalculator.util.exception.ApiClientException;
 
 public class ApiClient {
 

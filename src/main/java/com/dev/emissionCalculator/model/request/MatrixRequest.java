@@ -1,4 +1,4 @@
-package org.example.emissionCalculator.model.request;
+package com.dev.emissionCalculator.model.request;
 
 
 import java.util.List;

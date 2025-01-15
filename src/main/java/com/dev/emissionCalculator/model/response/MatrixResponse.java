@@ -1,4 +1,4 @@
-package org.example.emissionCalculator.model.response;
+package com.dev.emissionCalculator.model.response;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
