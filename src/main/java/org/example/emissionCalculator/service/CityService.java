@@ -9,17 +9,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
 import static org.example.emissionCalculator.client.ApiClient.APIKEY;
 import static org.example.emissionCalculator.util.constant.AppConstant.GEOCODE_BASE_URL;
 import static org.example.emissionCalculator.util.constant.AppConstant.LAYER_LOCALITY;
 
 public class CityService {
 
-    private static final Logger LOGGER = Logger.getLogger(CityService.class.getName());
 
     private ApiClient apiClient;
 
@@ -44,7 +40,6 @@ public class CityService {
                             .collect(Collectors.toList()))
                     .orElse(Collections.emptyList());
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error fetching coordinates for city: " + cityName);
             throw new ApiClientException("Error fetching coordinates for city: " + e.getMessage());
         }
 
