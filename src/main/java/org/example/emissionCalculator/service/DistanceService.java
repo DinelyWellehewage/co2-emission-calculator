@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.emissionCalculator.client.ApiClient;
 import org.example.emissionCalculator.model.MatrixResponse;
+import org.example.emissionCalculator.util.exception.ApiClientException;
 
 import java.util.List;
 import java.util.Map;
@@ -24,10 +25,8 @@ public class DistanceService {
 
     public double getDistanceMatrix(List<List<Double>> coordinates) {
         String urlString = MATRIX_BASE_URL + PROFILE;
-        ObjectMapper objectMapper = new ObjectMapper();
-
         try {
-            String payload = objectMapper.writeValueAsString(Map.of("locations", coordinates, "metrics", List.of("distance")));
+            String payload = buildPayload(coordinates);
             MatrixResponse matrixResponse = apiClient.sendPostRequest(urlString, payload, ApiClient.APIKEY, MatrixResponse.class);
             /**
              * calculates the distance between two geographic coordinates using MATRIX API
@@ -42,15 +41,20 @@ public class DistanceService {
              * */
             Double distance = matrixResponse.getDistances().get(0).get(1);
             return distance;
-
-        } catch (JsonProcessingException e) {
-            LOGGER.log(Level.SEVERE, "Failed to serialize payload for MATRIX API", e);
-            throw new RuntimeException("Failed to serialize payload for MATRIX API", e);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error occurred while fetching distance matrix", e);
-            throw new RuntimeException("Error occurred while fetching distance matrix", e);
+            throw new ApiClientException("Error occurred while fetching distance matrix", e);
         }
+    }
 
+    private String buildPayload(List<List<Double>> coordinates){
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(Map.of("locations", coordinates, "metrics", List.of("distance")));
+        } catch (JsonProcessingException e) {
+            LOGGER.log(Level.SEVERE, "Failed to serialize payload for MATRIX API", e);
+            throw new ApiClientException("Error occurred while fetching distance matrix", e);
+        }
 
     }
 }
