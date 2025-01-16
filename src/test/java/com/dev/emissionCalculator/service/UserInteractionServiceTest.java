@@ -44,7 +44,7 @@ class UserInteractionServiceTest {
                 new LocationInfo(List.of(13.407032, 52.524932), "Germany", "Berlin")
         );
 
-        String input = "invalid";
+        String input = "invalid\n3\n0\n";
         InputStream stream = System.in;
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         try {

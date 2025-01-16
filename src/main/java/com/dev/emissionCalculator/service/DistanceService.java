@@ -56,7 +56,7 @@ public class DistanceService {
     private List<List<Double>> filterDistances(List<List<Double>> distanceMatrix) {
         return distanceMatrix.stream()
                 .map(list->list.stream()
-                        .filter(value->value!=null)
+                        .filter(value->value!=null )
                         .collect(Collectors.toList()))
                 .filter(list-> !list.isEmpty())
                 .collect(Collectors.toList());

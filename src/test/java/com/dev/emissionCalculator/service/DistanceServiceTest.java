@@ -32,8 +32,8 @@ class DistanceServiceTest {
 
         MatrixResponse matrixResponse = new MatrixResponse();
         matrixResponse.setDistances(List.of(
-                List.of(0.0,expectedDistance),
-                List.of(expectedDistance,0.0)
+                List.of(expectedDistance)
+
         ));
 
         when(apiClient.sendPostRequest(anyString(),anyString(),anyString(),eq(MatrixResponse.class)))
