@@ -1,6 +1,7 @@
 package com.dev.emissionCalculator;
 
 import com.dev.emissionCalculator.client.ApiClient;
+import com.dev.emissionCalculator.context.ApplicationContext;
 import com.dev.emissionCalculator.service.CO2EmissionService;
 import com.dev.emissionCalculator.service.CityService;
 import com.dev.emissionCalculator.service.DistanceService;
@@ -18,6 +19,8 @@ public class CO2Calculator {
 
     public static void main(String[] args) {
 
+        ApplicationContext applicationContext = new ApplicationContext();
+        CO2EmissionService co2EmissionService = applicationContext.getCo2EmissionService();
         try {
             Map<String, String> arguments = parseArguments(args);
 
@@ -29,12 +32,6 @@ public class CO2Calculator {
                 System.out.println("Usage: ./co2-calculator --start <startCity> --end <endCity> --transportation-method <vehicleType>");
                 return;
             }
-            ApiClient apiClient = new ApiClient();
-            CityService cityService = new CityService(apiClient);
-            DistanceService distanceService = new DistanceService(apiClient);
-            UserInteractionService userInteractionService = new UserInteractionService();
-
-            CO2EmissionService co2EmissionService = new CO2EmissionService(cityService, distanceService, userInteractionService);
             String co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
             System.out.println("Your trip caused " + co2Emission + "kg of CO2-equivalent.");
         } catch (InvalidInputException exception) {
