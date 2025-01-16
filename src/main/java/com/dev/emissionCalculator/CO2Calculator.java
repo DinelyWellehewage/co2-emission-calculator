@@ -22,7 +22,7 @@ public class CO2Calculator {
         ApplicationContext applicationContext = new ApplicationContext();
         CO2EmissionService co2EmissionService = applicationContext.getCo2EmissionService();
         try {
-            Map<String, String> arguments = parseArguments(args);
+            Map<String, String> arguments = applicationContext.getArgumentParser().parseArguments(args);
 
             String startCity = arguments.get("--start");
             String endCity = arguments.get("--end");
@@ -44,25 +44,6 @@ public class CO2Calculator {
 
     }
 
-    private static Map<String, String> parseArguments(String[] args) {
-        Map<String, String> argsMap = new HashMap<>();
-        for (String arg : args) {
-            if (arg.contains("=")) {
-                String[] keyValue = arg.split("=");
-                if (keyValue.length == 2) {
-                    argsMap.put(keyValue[0], keyValue[1]);
-                }
-            } else if (arg.startsWith("--")) {
-                String key = arg;
-                String value = null;
-                int index = Arrays.asList(args).indexOf(arg);
-                if (index + 1 < args.length && !args[index + 1].startsWith("--")) {
-                    value = args[index + 1];
-                }
-                argsMap.put(key, value);
-            }
-        }
-        return argsMap;
-    }
+
 
 }
