@@ -24,7 +24,9 @@ public class CO2Calculator {
      * @param args the command line arguments specifying the trip details
      */
 
+
     public static void main(String[] args) {
+
 
         ApplicationContext applicationContext = new ApplicationContext();
         CO2EmissionService co2EmissionService = applicationContext.getCo2EmissionService();

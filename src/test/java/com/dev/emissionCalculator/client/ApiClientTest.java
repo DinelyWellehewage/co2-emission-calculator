@@ -10,33 +10,33 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import static com.dev.emissionCalculator.client.ApiClient.APIKEY;
-import static com.dev.emissionCalculator.util.constant.AppConstant.GEOCODE_BASE_URL;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+
 class ApiClientTest {
+
 
     private ApiClient apiClient;
     @Mock
     private HttpClient httpClient;
     private HttpResponse<String> httpResponse;
 
-
     @BeforeEach
     void setUp() throws Exception {
+
         MockitoAnnotations.openMocks(this);
         httpResponse = Mockito.mock(HttpResponse.class);
         apiClient = new ApiClient();
         var httpClientField = ApiClient.class.getDeclaredField("httpClient");
         httpClientField.setAccessible(true);
         httpClientField.set(apiClient,httpClient);
+
     }
 
     @Test

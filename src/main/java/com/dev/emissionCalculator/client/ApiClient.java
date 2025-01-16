@@ -10,6 +10,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
 
+import static com.dev.emissionCalculator.util.constant.AppConstant.ORS_TOKEN;
+
 /**
  * ApiClient class is responsible for handling HTTP requests and responses.
  * It supports sending GET and POST requests using HttpClient and processing responses.
@@ -18,7 +20,7 @@ import com.dev.emissionCalculator.util.exception.ApiClientException;
 public class ApiClient {
 
     //API key used for authentication, retrieved from environment variable
-    public static final String APIKEY = Optional.ofNullable(System.getenv("ORS_TOKEN"))
+    public static final String APIKEY = Optional.ofNullable(System.getenv(ORS_TOKEN))
             .orElseThrow(() -> new IllegalArgumentException("API key not found. Please set ORS_TOKEN variable"));
 
     private final HttpClient httpClient;
