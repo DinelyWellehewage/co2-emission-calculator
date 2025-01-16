@@ -8,12 +8,18 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.cdimascio.dotenv.Dotenv;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
+
+/**
+ * ApiClient class is responsible for handling HTTP requests and responses.
+ * It supports sending GET and POST requests using HttpClient and processing responses.
+ */
+
 
 public class ApiClient {
 
-    public static final String APIKEY = Optional.ofNullable(Dotenv.load().get("ORS_TOKEN"))
+    //API key used for authentication, retrieved from environment variable
+    public static final String APIKEY = Optional.ofNullable(System.getenv("ORS_TOKEN"))
             .orElseThrow(()-> new IllegalArgumentException("API key not found. Please set ORS_TOKEN variable"));
 
     private final HttpClient httpClient;
