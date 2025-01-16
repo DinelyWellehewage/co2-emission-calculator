@@ -4,7 +4,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A utility class for parsing command line arguments into a key value map.
+ * Supports arguments in the form of `key=value` or `--key value`
+ */
+
 public class ArgumentParser {
+
+    /**
+     * Returns a map of key-value pairs for command line arguments
+     *
+     * @param args an array of command-line arguments
+     * @return a map where key are argument name and values are argument values
+     */
 
     public Map<String, String> parseArguments(String[] args) {
         Map<String, String> argsMap = new HashMap<>();
