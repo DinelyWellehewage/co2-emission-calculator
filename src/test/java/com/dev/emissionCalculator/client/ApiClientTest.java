@@ -24,11 +24,11 @@ class ApiClientTest {
         apiClient = new ApiClient();
     }
 
-//    @Test
-//    void sendGetRequest_Success(){
-//        String url = GEOCODE_BASE_URL;
-//        String responseBody = "";
-//
-//
-//    }
+    @Test
+    void sendGetRequest_Success(){
+        String url = GEOCODE_BASE_URL;
+        String responseBody = "";
+
+
+    }
 }

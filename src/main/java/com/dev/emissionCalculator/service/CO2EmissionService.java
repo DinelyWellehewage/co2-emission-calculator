@@ -2,6 +2,7 @@ package com.dev.emissionCalculator.service;
 
 import com.dev.emissionCalculator.model.VehicleType;
 import com.dev.emissionCalculator.model.response.LocationInfo;
+import com.dev.emissionCalculator.util.exception.ApiClientException;
 import com.dev.emissionCalculator.util.exception.InvalidInputException;
 
 import java.util.ArrayList;
@@ -21,15 +22,24 @@ public class CO2EmissionService {
     }
 
     public String calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
-        VehicleType vehicleType = handleTransportationMethod(transportationMethod);
+        try{
+            VehicleType vehicleType = handleTransportationMethod(transportationMethod);
 
-        List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity);
-        List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity);
+            List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity);
+            List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity);
 
-        double distance = getDistance(selectedStartCityCoordinates, selectedEndCityCoordinates);
-        double emission = vehicleType.calculateEmission(distance);
+            double distance = getDistance(selectedStartCityCoordinates, selectedEndCityCoordinates);
+            double emission = vehicleType.calculateEmission(distance);
 
-        return String.format("%.1f", emission);
+            return String.format("%.1f", emission);
+        } catch (InvalidInputException exception) {
+            throw new InvalidInputException("Invalid input: "+exception.getMessage());
+        }catch (ApiClientException exception){
+            throw new ApiClientException("API Client Error"+exception.getMessage());
+        }catch (Exception exception){
+            throw new RuntimeException("An unexpected Error occurred"+exception.getMessage());
+        }
+
     }
 
     private List<Double> selectCityCoordinate(String cityName) {

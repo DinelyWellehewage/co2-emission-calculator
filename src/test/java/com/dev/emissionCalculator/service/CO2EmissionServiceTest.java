@@ -67,7 +67,7 @@ class CO2EmissionServiceTest {
         InvalidInputException invalidInputException =
                 assertThrows(InvalidInputException.class,
                         () -> co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod));
-        String expectedResult = "No coordinates found for city: " + startCity;
+        String expectedResult = "Invalid input: No coordinates found for city: " + startCity;
         assertEquals(expectedResult, invalidInputException.getMessage());
     }
 
@@ -81,7 +81,7 @@ class CO2EmissionServiceTest {
         InvalidInputException invalidInputException =
                 assertThrows(InvalidInputException.class,
                         () -> co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod));
-        String expectedResult = "No coordinates found for city: " + startCity;
+        String expectedResult = "Invalid input: No coordinates found for city: " + startCity;
         assertEquals(expectedResult, invalidInputException.getMessage());
     }
 
@@ -95,7 +95,7 @@ class CO2EmissionServiceTest {
         InvalidInputException invalidInputException =
                 assertThrows(InvalidInputException.class,
                         () -> co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod));
-        String expectedResult = "Invalid transport method: " + transportationMethod;
+        String expectedResult = "Invalid input: Invalid transport method: " + transportationMethod;
         assertEquals(expectedResult, invalidInputException.getMessage());
     }
 
