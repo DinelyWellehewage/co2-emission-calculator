@@ -56,7 +56,7 @@ public class CO2EmissionService {
         try {
             return VehicleType.valueOf(transportationMethod.toUpperCase().replace("-", "_"));
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid transport method: " + transportationMethod);
+            throw new InvalidInputException("Invalid transport method: " + transportationMethod);
         }
     }
 
