@@ -1,6 +1,8 @@
 package com.dev.emissionCalculator.client;
 
 import com.dev.emissionCalculator.model.response.GeoCodingResponse;
+import com.dev.emissionCalculator.model.response.MatrixResponse;
+import com.dev.emissionCalculator.util.exception.ApiClientException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -27,27 +29,95 @@ class ApiClientTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
         httpResponse = Mockito.mock(HttpResponse.class);
         apiClient = new ApiClient(httpClient);
     }
 
     @Test
-    void sendGetRequest_Success() throws IOException, InterruptedException {
+    void sendGetRequestTest_Success() throws IOException, InterruptedException {
         String url = "https://api.openrouteservice.org/geocode/search";
         String responseBody = geoCodingResponse();
         when(httpResponse.statusCode()).thenReturn(200);
         when(httpResponse.body()).thenReturn(responseBody);
-        when(httpClient.send(any(HttpRequest.class),any(HttpResponse.BodyHandler.class))).thenReturn(httpResponse);
+        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class))).thenReturn(httpResponse);
 
         GeoCodingResponse response = apiClient.sendGetRequest(url, GeoCodingResponse.class);
 
-        assertEquals(10.007046,response.getFeatures().get(0).getGeometry().getCoordinates().get(0));
+        assertEquals(10.007046, response.getFeatures().get(0).getGeometry().getCoordinates().get(0));
 
     }
 
-    private String geoCodingResponse(){
+    @Test
+    void sendGetRequestTest_Failure() throws IOException, InterruptedException {
+        String url = "https://api.openrouteservice.org/geocode/search";
+        when(httpResponse.statusCode()).thenReturn(404);
+        when(httpResponse.body()).thenReturn("Not Found");
+        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class))).thenReturn(httpResponse);
+
+        ApiClientException exception = assertThrows(ApiClientException.class, () -> {
+            apiClient.sendGetRequest(url, GeoCodingResponse.class);
+        });
+
+        assertTrue(exception.getMessage().contains("HTTP request failed with status code: "));
+    }
+    @Test
+    void sendPostRequestTest_Success() throws IOException, InterruptedException {
+        String url = "https://api.openrouteservice.org/v2/matrix";
+        String requestBody = matrixRequest();
+        String responseBody = matrixResponse();
+        String apikey = "test-api-key";
+        when(httpResponse.statusCode()).thenReturn(200);
+        when(httpResponse.body()).thenReturn(responseBody);
+        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class))).thenReturn(httpResponse);
+
+        MatrixResponse response = apiClient.sendPostRequest(url,requestBody,apikey, MatrixResponse.class);
+        assertEquals(287735.81, response.getDistances().get(0).get(0));
+    }
+    @Test
+    void sendPostRequestTest_Failure() throws IOException, InterruptedException {
+        String url = "https://api.openrouteservice.org/v2/matrix";
+        String requestBody = matrixRequest();
+        String apikey = "test-api-key";
+        when(httpResponse.statusCode()).thenReturn(500);
+        when(httpResponse.body()).thenReturn("Internal server error");
+        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class))).thenReturn(httpResponse);
+
+        ApiClientException exception = assertThrows(ApiClientException.class, () -> {
+            apiClient.sendPostRequest(url,requestBody,apikey, MatrixResponse.class);
+        });
+
+        assertTrue(exception.getMessage().contains("HTTP request failed with status code: "));
+    }
+
+    private String matrixResponse(){
+        String matrixResponse = "{\n" +
+                "    \"distances\": [\n" +
+                "        [\n" +
+                "            287735.81\n" +
+                "        ]\n" +
+                "    ]\n" +
+                "}";
+        return matrixResponse;
+    }
+    private String matrixRequest(){
+        String matrixRequest = "{\n" +
+                "    \"locations\": [\n" +
+                "        [\n" +
+                "            10.007046,\n" +
+                "            53.576158\n" +
+                "        ],\n" +
+                "        [\n" +
+                "            13.407032,\n" +
+                "            52.524932\n" +
+                "        ]\n" +
+                "    ]\n" +
+                "}";
+        return matrixRequest;
+    }
+
+    private String geoCodingResponse() {
         String geoCodeResponse = "{\n" +
                 "    \"features\": [\n" +
                 "        {\n" +
@@ -56,10 +126,6 @@ class ApiClientTest {
                 "                    10.007046,\n" +
                 "                    53.576158\n" +
                 "                ]\n" +
-                "            },\n" +
-                "            \"properties\": {\n" +
-                "                \"country\": \"Germany\",\n" +
-                "                \"region\": \"Hamburg\"\n" +
                 "            }\n" +
                 "        }\n" +
                 "    ]\n" +

@@ -17,7 +17,6 @@ import static com.dev.emissionCalculator.util.constant.AppConstant.LAYER_LOCALIT
 
 public class CityService {
 
-
     private ApiClient apiClient;
 
     public CityService(ApiClient apiClient) {

@@ -33,7 +33,7 @@ public class ApiClient {
             HttpResponse<String> response = httpClient.send(request,HttpResponse.BodyHandlers.ofString());
             return handleResponse(response,responseType);
         } catch (Exception e) {
-            throw new ApiClientException(e.getMessage(),e);
+            throw new ApiClientException("Error sending GET request: "+e.getMessage(),e);
         }
     }
     public <T> T sendPostRequest(String urlString,String body,String apiKey,Class<T> responseType){
@@ -48,7 +48,7 @@ public class ApiClient {
             HttpResponse<String> response = httpClient.send(request,HttpResponse.BodyHandlers.ofString());
             return handleResponse(response,responseType);
         } catch (Exception e) {
-            throw new ApiClientException("Error sending POST request " ,e);
+            throw new ApiClientException("Error sending POST request: " +e.getMessage(),e);
         }
     }
 
