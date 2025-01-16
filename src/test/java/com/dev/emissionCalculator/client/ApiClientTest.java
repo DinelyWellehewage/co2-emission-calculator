@@ -32,7 +32,7 @@ class ApiClientTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         httpResponse = Mockito.mock(HttpResponse.class);
-        apiClient = new ApiClient(httpClient);
+        apiClient = new ApiClient();
     }
 
     @Test
