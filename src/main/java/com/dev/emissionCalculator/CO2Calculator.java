@@ -25,25 +25,24 @@ public class CO2Calculator {
             String endCity = arguments.get("--end");
             String transportationMethod = arguments.get("--transportation-method");
 
-            if (startCity==null || endCity==null || transportationMethod==null){
+            if (startCity == null || endCity == null || transportationMethod == null) {
                 System.out.println("Usage: ./co2-calculator --start <startCity> --end <endCity> --transportation-method <vehicleType>");
                 return;
             }
-
             ApiClient apiClient = new ApiClient();
             CityService cityService = new CityService(apiClient);
             DistanceService distanceService = new DistanceService(apiClient);
             UserInteractionService userInteractionService = new UserInteractionService();
 
-            CO2EmissionService co2EmissionService = new CO2EmissionService(cityService,distanceService,userInteractionService);
+            CO2EmissionService co2EmissionService = new CO2EmissionService(cityService, distanceService, userInteractionService);
             String co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
-            System.out.println("Your trip caused "+ co2Emission+ "kg of CO2-equivalent.");
-        }catch (InvalidInputException exception){
-            System.out.println("Error: "+ exception.getMessage());
-        }catch (ApiClientException exception){
-            System.out.println("API Error: "+ exception.getMessage());
-        }catch (Exception exception){
-            System.out.println("An unexpected error occurred: "+ exception.getMessage());
+            System.out.println("Your trip caused " + co2Emission + "kg of CO2-equivalent.");
+        } catch (InvalidInputException exception) {
+            System.out.println("Error: " + exception.getMessage());
+        } catch (ApiClientException exception) {
+            System.out.println("API Error: " + exception.getMessage());
+        } catch (Exception exception) {
+            System.out.println("An unexpected error occurred: " + exception.getMessage());
         }
 
     }

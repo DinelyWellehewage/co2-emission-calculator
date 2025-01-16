@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -29,10 +30,13 @@ class ApiClientTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);
         httpResponse = Mockito.mock(HttpResponse.class);
         apiClient = new ApiClient();
+        var httpClientField = ApiClient.class.getDeclaredField("httpClient");
+        httpClientField.setAccessible(true);
+        httpClientField.set(apiClient,httpClient);
     }
 
     @Test

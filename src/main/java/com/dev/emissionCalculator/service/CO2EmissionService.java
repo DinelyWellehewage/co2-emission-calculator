@@ -22,7 +22,7 @@ public class CO2EmissionService {
     }
 
     public String calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
-        try{
+        try {
             VehicleType vehicleType = handleTransportationMethod(transportationMethod);
 
             List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity);
@@ -33,11 +33,11 @@ public class CO2EmissionService {
 
             return String.format("%.1f", emission);
         } catch (InvalidInputException exception) {
-            throw new InvalidInputException("Invalid input: "+exception.getMessage());
-        }catch (ApiClientException exception){
-            throw new ApiClientException("API Client Error"+exception.getMessage());
-        }catch (Exception exception){
-            throw new RuntimeException("An unexpected Error occurred"+exception.getMessage());
+            throw new InvalidInputException("Invalid input: " + exception.getMessage());
+        } catch (ApiClientException exception) {
+            throw new ApiClientException("API Client Error" + exception.getMessage());
+        } catch (Exception exception) {
+            throw new RuntimeException("An unexpected Error occurred" + exception.getMessage());
         }
 
     }
