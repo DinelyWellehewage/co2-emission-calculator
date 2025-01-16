@@ -8,6 +8,7 @@ import com.dev.emissionCalculator.service.UserInteractionService;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
 import com.dev.emissionCalculator.util.exception.InvalidInputException;
 
+import java.net.http.HttpClient;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,8 @@ public class CO2Calculator {
                 return;
             }
 
-            ApiClient apiClient = new ApiClient();
+            HttpClient httpClient = HttpClient.newHttpClient();
+            ApiClient apiClient = new ApiClient(httpClient);
             CityService cityService = new CityService(apiClient);
             DistanceService distanceService = new DistanceService(apiClient);
             UserInteractionService userInteractionService = new UserInteractionService();

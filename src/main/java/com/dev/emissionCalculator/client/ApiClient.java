@@ -19,8 +19,8 @@ public class ApiClient {
     private final HttpClient httpClient;
     ObjectMapper objectMapper = new ObjectMapper();
 
-    public ApiClient(){
-        this.httpClient = java.net.http.HttpClient.newHttpClient();
+    public ApiClient(HttpClient httpClient){
+        this.httpClient = httpClient;
     }
 
     public <T> T sendGetRequest(String urlString,Class<T> responseType){
