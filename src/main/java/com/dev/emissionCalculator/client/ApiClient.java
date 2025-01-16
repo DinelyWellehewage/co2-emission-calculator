@@ -29,6 +29,16 @@ public class ApiClient {
         this.httpClient = HttpClient.newHttpClient();;
     }
 
+    /**
+     *Sends an HTTP GET request to the specified URL and process the response
+     *
+     * @param urlString the URL to send the GET request
+     * @param responseType the class type of expected response
+     * @param <T> the type of response body
+     * @return the deserialized response body
+     * @throws ApiClientException if the request fails or the response cannot be processed
+     */
+
     public <T> T sendGetRequest(String urlString,Class<T> responseType){
         try {
             URI uri = URI.create(urlString);
@@ -42,6 +52,18 @@ public class ApiClient {
             throw new ApiClientException("Error sending GET request: "+e.getMessage(),e);
         }
     }
+
+    /**
+     *Sends an HTTP POST request to the specified URL and process the response
+     *
+     * @param urlString the URL to send the POST request
+     * @param body the request body to POST request
+     * @param apiKey the API key for authorization
+     * @param responseType the class type of expected response
+     * @return the deserialized response body
+     * @param <T> the type of response body
+     * @throws ApiClientException if the request fails or the response cannot be processed
+     */
     public <T> T sendPostRequest(String urlString,String body,String apiKey,Class<T> responseType){
         try {
             URI uri = URI.create(urlString);
@@ -58,6 +80,15 @@ public class ApiClient {
         }
     }
 
+    /**
+     *Handles an HTTP response,checking the status code and deserializing the response body
+     *
+     * @param response the HTTP response to process
+     * @param responseType the class type of expected response
+     * @param <T> the type of response body
+     * @return the deserialized response body
+     * @throws ApiClientException if response status is not 200 or JSON processing fails
+     */
     private <T> T handleResponse(HttpResponse<String> response,Class<T> responseType){
 
         if (response.statusCode()==200){

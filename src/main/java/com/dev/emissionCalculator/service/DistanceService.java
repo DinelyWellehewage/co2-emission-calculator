@@ -13,6 +13,12 @@ import java.util.stream.Collectors;
 
 import static com.dev.emissionCalculator.util.constant.AppConstant.*;
 
+/**
+ * DistanceService class provides functionality to retrieve distance between two geographical coordinates.
+ * It uses Matrix API to process the request
+ * {@link <a href="https://openrouteservice.org/dev/#/api-docs/v2/matrix/">Matrix API</a>}
+ */
+
 public class DistanceService {
 
     private ApiClient apiClient;
@@ -22,7 +28,7 @@ public class DistanceService {
     }
 
     /**
-     * calculates the distance between two geographic coordinates using MATRIX API
+     * Calculates the distance between two geographic coordinates using MATRIX API
      *
      *
      * @see <a href="https://giscience.github.io/openrouteservice/api-reference/endpoints/matrix/">MATRIX API Documentation</a>
@@ -32,6 +38,8 @@ public class DistanceService {
      *
      * @param coordinates a list of geographic coordinates
      * @return the distance in meters from source and destination coordinates
+     * @throws InvalidInputException if no valid distances are found
+     * @throws  ApiClientException if an error occurs during API request or response processing
      */
 
     public double getDistanceMatrix(List<List<Double>> coordinates) {
@@ -53,6 +61,13 @@ public class DistanceService {
         }
     }
 
+    /**
+     * Filter distance matrix to remove null values
+     *
+     * @param distanceMatrix the distance matrix retrived from API
+     * @return a filtered distance matrix containing non-null values
+     */
+
     private List<List<Double>> filterDistances(List<List<Double>> distanceMatrix) {
         return distanceMatrix.stream()
                 .map(list->list.stream()
@@ -61,6 +76,14 @@ public class DistanceService {
                 .filter(list-> !list.isEmpty())
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Builds the JSON payload for the matrix API request
+     *
+     * @param coordinates a list of geographical coordinates
+     * @return a JSON string to represent request payload
+     * @throws ApiClientException if an error occurs during JSON serialization
+     */
 
     private String buildRequestPayload(List<List<Double>> coordinates) {
         ObjectMapper objectMapper = new ObjectMapper();

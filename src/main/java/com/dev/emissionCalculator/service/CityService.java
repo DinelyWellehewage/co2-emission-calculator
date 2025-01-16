@@ -16,6 +16,13 @@ import static com.dev.emissionCalculator.client.ApiClient.APIKEY;
 import static com.dev.emissionCalculator.util.constant.AppConstant.GEOCODE_BASE_URL;
 import static com.dev.emissionCalculator.util.constant.AppConstant.LAYER_LOCALITY;
 
+
+/**
+ * CityService class provides functionality for retrieving geographical information for a given city.
+ * It uses Geocode API to process the request.
+ * {@link <a href="https://openrouteservice.org/dev/#/api-docs/geocode/search/get">Geocode API</a>}
+ */
+
 public class CityService {
 
     private ApiClient apiClient;
@@ -23,6 +30,14 @@ public class CityService {
     public CityService(ApiClient apiClient) {
         this.apiClient = apiClient;
     }
+
+    /**
+     *Retrieves the geographical information for a given city name
+     *
+     * @param cityName name of the city to fetch coordinates
+     * @return a list of objects containing location information
+     * @throws ApiClientException if an error occurs during API request or response processing
+     */
 
     public List<LocationInfo> getCityCoordinates(String cityName) {
 
