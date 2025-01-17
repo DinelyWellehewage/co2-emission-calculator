@@ -27,7 +27,8 @@ The **Co2 Emission Calculator** is a Java-based application designed to estimate
 - Maven 3.x
 - OpenRouteService API key (obstainable from [OpenRouteService](https://openrouteservice.org/))
 
-### Installation
+### 🚀 Build
+Follow 
 
 1. CLone the repository
 ```bash
@@ -37,17 +38,19 @@ git clone https://github.com/DinelyWellehewage/co2-emission-calculator.git
 ```bash
 cd co2-emission-calculator
 ```
-3. Configure API key
-
-- Register for an API key on [OpenRouteService](https://openrouteservice.org/)
-- Add API key as an environment variable
-4. Build the Application
+3. Build the Application
 ```bash
 mvn clean install
 ```
+4. Configure API key
+
+- Register for an API key on [OpenRouteService](https://openrouteservice.org/)
+- Add API key as an environment variable
+
+
 5.Run the Application
 ```bash
-java -jar <>.jar --start <start city> --end <end city> --transportation-method <transportation method>
+java -jar co2-calculator.jar --start <start city> --end <end city> --transportation-method <transportation method>
 ```
 ### Usage
 1. Input the source and destination cities
