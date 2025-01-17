@@ -66,30 +66,24 @@ java -jar co2-calculator.jar --start <start city> --end <end city> --transportat
 Command-line arguments can be put in any order and either use an equal sign(=) or a space ( ) between key and value.
 Valid options for --transportation-method are:
 
-Small cars:
-- `diesel-car-small`
-- `petrol-car-small`
-- `plugin-hybrid-car-small`
-- `electric-car-small`
+#### Valid Options for Transportation Method
 
-Medium cars:
-- `diesel-car-medium`
-- `petrol-car-medium`
-- `plugin-hybrid-car-medium`
-- `electric-car-medium`
-
-Large cars:
-- `diesel-car-large`
-- `petrol-car-large`
-- `plugin-hybrid-car-large`
-- `electric-car-large`
-
-Bus
-- `bus-default`
-
-Train
-- `train-default`
-
+| **Vehicle Type** | **Transportation Method** |
+|-------------------|---------------------------|
+| **Small Cars**    | `diesel-car-small`        |
+|                   | `petrol-car-small`        |
+|                   | `plugin-hybrid-car-small` |
+|                   | `electric-car-small`      |
+| **Medium Cars**   | `diesel-car-medium`       |
+|                   | `petrol-car-medium`       |
+|                   | `plugin-hybrid-car-medium` |
+|                   | `electric-car-medium`     |
+| **Large Cars**    | `diesel-car-large`        |
+|                   | `petrol-car-large`        |
+|                   | `plugin-hybrid-car-large` |
+|                   | `electric-car-large`      |
+| **Bus**           | `bus-default`             |
+| **Train**         | `train-default`           |
 
 Example:
 
@@ -98,7 +92,7 @@ CO2 Emission Calculator
 -------------------------
 Entered Start City: Hamburg
 Entered End City: Berlin
-Entered Transporation method: diesel-car-medium
+Entered Transportation method: diesel-car-medium
 
 Start City Location Information
 Hamburg Coordinates 
