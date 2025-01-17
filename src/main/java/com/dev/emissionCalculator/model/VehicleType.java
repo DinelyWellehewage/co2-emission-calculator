@@ -14,8 +14,8 @@ public enum VehicleType {
     PETROL_CAR_LARGE(new BasicVehicle(282)),
     PLUGIN_HYBRID_CAR_LARGE(new BasicVehicle(126)),
     ELECTRIC_CAR_LARGE(new BasicVehicle(73)),
-    BUS(new BasicVehicle(27)),
-    TRAIN(new BasicVehicle(6));
+    BUS_DEFAULT(new BasicVehicle(27)),
+    TRAIN_DEFAULT(new BasicVehicle(6));
 
     private final Vehicle vehicle;
 
