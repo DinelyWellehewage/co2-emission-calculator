@@ -57,36 +57,36 @@ java -jar <>.jar --start <start city> --end <end city> --transportation-method <
 4. The application displays the CO2-equivalent emission
 
 ### Command-line Arguments
-- --start = START_CITY
-- --end = END_CITY
-- --transportation-method = TRANSPORT_METHOD
+- `--start=START_CITY`
+- `--end=END_CITY`
+- `--transportation-method=TRANSPORT_METHOD`
 
 Command-line arguments can be put in any order and either use an equal sign(=) or a space ( ) between key and value.
 Valid options for --transportation-method are:
 
 Small cars:
-- diesel-car-small
-- petrol-car-small
-- plugin-hybrid-car-small
-- electric-car-small
+- `diesel-car-small`
+- `petrol-car-small`
+- `plugin-hybrid-car-small`
+- `electric-car-small`
 
 Medium cars:
-- diesel-car-medium
-- petrol-car-medium
-- plugin-hybrid-car-medium
-- electric-car-medium
+- `diesel-car-medium`
+- `petrol-car-medium`
+- `plugin-hybrid-car-medium`
+- `electric-car-medium`
 
 Large cars:
-- diesel-car-large
-- petrol-car-large
-- plugin-hybrid-car-large
-- electric-car-large
+- `diesel-car-large`
+- `petrol-car-large`
+- `plugin-hybrid-car-large`
+- `electric-car-large`
 
 Bus
-- bus-default
+- `bus-default`
 
 Train
-- train-default
+- `train-default`
 
 
 Example:
