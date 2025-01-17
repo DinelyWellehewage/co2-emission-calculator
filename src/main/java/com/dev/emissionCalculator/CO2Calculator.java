@@ -27,16 +27,21 @@ public class CO2Calculator {
 
     public static void main(String[] args) {
 
-
+        System.out.println("CO2 Emission Calculator");
+        System.out.println("-------------------------");
         ApplicationContext applicationContext = new ApplicationContext();
         CO2EmissionService co2EmissionService = applicationContext.getCo2EmissionService();
         try {
+
             Map<String, String> arguments = applicationContext.getArgumentParser().parseArguments(args);
 
             String startCity = arguments.get("--start");
             String endCity = arguments.get("--end");
             String transportationMethod = arguments.get("--transportation-method");
 
+            System.out.println("Entered Start City: "+ startCity);
+            System.out.println("Entered End City: "+ endCity);
+            System.out.println("Entered Transporation method: "+transportationMethod);
             if (startCity == null || endCity == null || transportationMethod == null) {
                 System.out.println("Usage: ./co2-calculator --start <startCity> --end <endCity> --transportation-method <vehicleType>");
                 return;

@@ -37,7 +37,11 @@ public class CO2EmissionService {
         try {
             VehicleType vehicleType = handleTransportationMethod(transportationMethod);
 
+            System.out.println("");
+            System.out.println("Start City Location Information");
             List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity);
+            System.out.println("");
+            System.out.println("End City Location Information");
             List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity);
 
             double distance = getDistance(selectedStartCityCoordinates, selectedEndCityCoordinates);
