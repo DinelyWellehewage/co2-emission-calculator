@@ -65,28 +65,28 @@ Command-line arguments can be put in any order and either use an equal sign(=) o
 Valid options for --transportation-method are:
 
 Small cars:
-- diesel-car-small : 142g
-- petrol-car-small : 154g
-- plugin-hybrid-car-small : 73g
-- electric-car-small : 50g
+- diesel-car-small
+- petrol-car-small
+- plugin-hybrid-car-small
+- electric-car-small
 
 Medium cars:
-- diesel-car-medium : 171g
-- petrol-car-medium : 192g
-- plugin-hybrid-car-medium : 110g
-- electric-car-medium : 58g
+- diesel-car-medium
+- petrol-car-medium
+- plugin-hybrid-car-medium
+- electric-car-medium
 
 Large cars:
-- diesel-car-large : 209g
-- petrol-car-large : 282g
-- plugin-hybrid-car-large : 126g
-- electric-car-large : 73g
+- diesel-car-large
+- petrol-car-large
+- plugin-hybrid-car-large
+- electric-car-large
 
 Bus
-- bus-default : 27g
+- bus-default
 
 Train
-- train-default : 6g
+- train-default
 
 
 Example:
