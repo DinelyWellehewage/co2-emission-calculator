@@ -38,19 +38,17 @@ public class UserInteractionService {
 
     private int getUserSelectedIndex(int maxIndex) {
         Scanner scanner = new Scanner(System.in);
-        int selectedIndex;
-        while (true) {
-            System.out.println("Select a coordinate (0 to " + maxIndex + "): (enter index):");
-            try {
+        int selectedIndex = -1;
+        while (selectedIndex<0 || selectedIndex>=maxIndex) {
+            System.out.println("Select a coordinate (0 to " + (maxIndex-1) + "): (enter index):");
+            if (scanner.hasNextInt()){
                 selectedIndex = scanner.nextInt();
-                if (selectedIndex >= 0 && selectedIndex < maxIndex) {
-                    break;
-                } else {
+                if (selectedIndex<0 || selectedIndex>=maxIndex){
                     System.out.println("Invalid Index. Try again.");
                 }
-            } catch (Exception e) {
+            }else{
                 System.out.println("Invalid input. Please enter a number");
-                scanner.nextLine();
+                scanner.next();
             }
         }
         return selectedIndex;
