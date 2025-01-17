@@ -2,6 +2,10 @@ package com.dev.emissionCalculator.service;
 
 import com.dev.emissionCalculator.client.ApiClient;
 import com.dev.emissionCalculator.model.response.MatrixResponse;
+import com.dev.emissionCalculator.util.exception.ApiClientException;
+import com.dev.emissionCalculator.util.exception.InvalidInputException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -41,5 +45,37 @@ class DistanceServiceTest {
         double distance = distanceService.getDistanceMatrix(coordinates);
         assertEquals(expectedDistance,distance);
     }
+
+    @Test
+    void getDistanceMatrix_InvalidInputException(){
+        List<List<Double>> coordinates = List.of(List.of(10.007046,53.576158),List.of(13.407032,52.524932));
+
+        MatrixResponse matrixResponse = new MatrixResponse();
+        matrixResponse.setDistances(List.of(
+                List.of()
+        ));
+
+        when(apiClient.sendPostRequest(anyString(),anyString(),anyString(),eq(MatrixResponse.class)))
+                .thenReturn(matrixResponse);
+
+        InvalidInputException exception = Assertions.assertThrows(InvalidInputException.class,()->{
+            distanceService.getDistanceMatrix(coordinates);
+        });
+        assertTrue(exception.getMessage().contains("No valid distances found"));
+    }
+    @Test
+    void getDistanceMatrix_ApiClientException(){
+        List<List<Double>> coordinates = List.of(List.of(10.007046,53.576158),List.of(13.407032,52.524932));
+
+        when(apiClient.sendPostRequest(anyString(),anyString(),anyString(),eq(MatrixResponse.class)))
+                .thenThrow(new RuntimeException("API failed"));
+
+        ApiClientException exception = Assertions.assertThrows(ApiClientException.class,()->{
+            distanceService.getDistanceMatrix(coordinates);
+        });
+        assertTrue(exception.getMessage().contains("Error occurred while fetching distance matrix"));
+    }
+
+
 
 }

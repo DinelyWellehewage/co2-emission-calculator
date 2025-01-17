@@ -1,5 +1,9 @@
 package com.dev.emissionCalculator.model;
 
+/**
+ * Represents a basic vehicle with a fixed CO2 emission factor
+ */
+
 public class BasicVehicle extends Vehicle {
 
     private final int co2Emission;

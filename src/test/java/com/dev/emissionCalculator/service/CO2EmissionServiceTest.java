@@ -98,5 +98,4 @@ class CO2EmissionServiceTest {
         String expectedResult = "Invalid input: Invalid transport method: " + transportationMethod;
         assertEquals(expectedResult, invalidInputException.getMessage());
     }
-
 }

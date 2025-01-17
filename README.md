@@ -8,7 +8,6 @@ The **Co2 Emission Calculator** is a Java-based application designed to estimate
 
 - **Calculate CO2 Emissions**: Computes emissions based on distance and transportation mode.
 - **Flexible Transport Modes**: Supports multiple modes of transport with customizable emission values.
-- **User-Friendly Interface**: Simple inputs for cities and transportation mode selection.
 
 ## Technologies Used
 
@@ -123,7 +122,6 @@ Your trip caused 49.2kg of CO2-equivalent.
 - Multi-Language Support: Enable inputs and outputs in multiple languages
 - Historical Data Storage: Allows users to save and analyze past calculations
 - Multiple Destination Support: Add support for multiple stops and complex routes
-- Caching: Implement caching for frequently queried routes
 
 ### Contact
 

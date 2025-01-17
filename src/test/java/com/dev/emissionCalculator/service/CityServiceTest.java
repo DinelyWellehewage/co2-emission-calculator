@@ -3,6 +3,7 @@ package com.dev.emissionCalculator.service;
 
 import com.dev.emissionCalculator.client.ApiClient;
 import com.dev.emissionCalculator.model.response.*;
+import com.dev.emissionCalculator.util.exception.ApiClientException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -64,6 +66,20 @@ class CityServiceTest {
 
         List<LocationInfo> result = cityService.getCityCoordinates(cityName);
         Assertions.assertTrue(result.isEmpty());
+
+    }
+
+    @Test
+    void getCityCoordinatesTest_Exception(){
+        String cityName = "Berlin";
+
+
+        when(apiClient.sendGetRequest(anyString(), eq(GeoCodingResponse.class))).thenThrow(new RuntimeException("API request failed"));
+
+        ApiClientException exception = Assertions.assertThrows(ApiClientException.class,()->{
+            cityService.getCityCoordinates(cityName);
+        });
+        assertTrue(exception.getMessage().contains("Error fetching coordinates for city: "));
 
     }
 

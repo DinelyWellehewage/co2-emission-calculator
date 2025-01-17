@@ -4,6 +4,7 @@ import com.dev.emissionCalculator.context.ApplicationContext;
 import com.dev.emissionCalculator.service.CO2EmissionService;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
 import com.dev.emissionCalculator.util.exception.InvalidInputException;
+
 import java.util.Map;
 
 /**
@@ -12,18 +13,10 @@ import java.util.Map;
  * specified transportation method.
  * The input parameters (start city, end city, transportation method) are provided as command-line arguments.
  *
- *
  * @author Dinely Shanuka
  */
 
 public class CO2Calculator {
-
-    /**
-     * The main method pass arguments to calculate the CO2 emission.
-     *
-     * @param args the command line arguments specifying the trip details
-     */
-
 
     public static void main(String[] args) {
 
@@ -39,9 +32,9 @@ public class CO2Calculator {
             String endCity = arguments.get("--end");
             String transportationMethod = arguments.get("--transportation-method");
 
-            System.out.println("Entered Start City: "+ startCity);
-            System.out.println("Entered End City: "+ endCity);
-            System.out.println("Entered Transporation method: "+transportationMethod);
+            System.out.println("Entered Start City: " + startCity);
+            System.out.println("Entered End City: " + endCity);
+            System.out.println("Entered Transportation method: " + transportationMethod);
             if (startCity == null || endCity == null || transportationMethod == null) {
                 System.out.println("Usage: ./co2-calculator --start <startCity> --end <endCity> --transportation-method <vehicleType>");
                 return;
@@ -55,9 +48,5 @@ public class CO2Calculator {
         } catch (Exception exception) {
             System.out.println("An unexpected error occurred: " + exception.getMessage());
         }
-
     }
-
-
-
 }

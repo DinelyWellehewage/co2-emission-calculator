@@ -1,5 +1,11 @@
 package com.dev.emissionCalculator.model;
 
+/**
+ * Enum representing various type of vehicles and their associated emission factors.
+ * Modified values based on {@link <a href="https://www.gov.uk/government/publications/greenhouse-gas-reporting-
+ * conversion-factors-2019">Conversion Factors Documentation</a>}
+ */
+
 public enum VehicleType {
 
     DIESEL_CAR_SMALL(new BasicVehicle(142)),
@@ -22,6 +28,13 @@ public enum VehicleType {
     VehicleType(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
+
+    /**
+     * Calculates the emissions for a given distance based on the vehicle type.
+     *
+     * @param distance the distance traveled
+     * @return the calculated emissions of CO2
+     */
 
     public double calculateEmission(double distance) {
         return vehicle.calculateEmissions(distance);

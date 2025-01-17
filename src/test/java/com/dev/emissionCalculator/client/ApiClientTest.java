@@ -3,6 +3,8 @@ package com.dev.emissionCalculator.client;
 import com.dev.emissionCalculator.model.response.GeoCodingResponse;
 import com.dev.emissionCalculator.model.response.MatrixResponse;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -15,7 +17,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
@@ -27,6 +30,7 @@ class ApiClientTest {
     private HttpClient httpClient;
     private HttpResponse<String> httpResponse;
 
+
     @BeforeEach
     void setUp() throws Exception {
 
@@ -36,6 +40,7 @@ class ApiClientTest {
         var httpClientField = ApiClient.class.getDeclaredField("httpClient");
         httpClientField.setAccessible(true);
         httpClientField.set(apiClient,httpClient);
+
 
     }
 
@@ -93,6 +98,22 @@ class ApiClientTest {
         });
 
         assertTrue(exception.getMessage().contains("HTTP request failed with status code: "));
+    }
+
+    @Test
+    void handleResponseInvalidJsonTest() throws IOException, InterruptedException {
+        String url = "https://api.openrouteservice.org/geocode/search";
+
+        when(httpResponse.statusCode()).thenReturn(200);
+        when(httpResponse.body()).thenReturn("{invalid Json}");
+        when(httpClient.send(any(HttpRequest.class),any(HttpResponse.BodyHandler.class))).thenReturn(httpResponse);
+
+        ApiClientException exception = assertThrows(ApiClientException.class,()->{
+            apiClient.sendGetRequest(url, GeoCodingResponse.class);
+        });
+
+        assertTrue(exception.getMessage().contains("Error processing JSON response"));
+
     }
 
     private String matrixResponse(){
