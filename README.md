@@ -27,12 +27,12 @@ The **Co2 Emission Calculator** is a Java-based application designed to estimate
 
 - Java Development Kit(JDK) 11 or later
 - Maven 3.x
-- OpenRouteService API key (obstainable from [OpenRouteService](https://openrouteservice.org/))
+- OpenRouteService API key (obtainable from [OpenRouteService](https://openrouteservice.org/))
 
 ### ⚙️ Build
 Follow the steps outlined below to get started.
 
-1. CLone the repository.
+1. Clone the repository.
 ```bash
 git clone https://github.com/DinelyWellehewage/co2-emission-calculator.git
 ```
@@ -56,10 +56,10 @@ cd target
 java -jar co2-calculator.jar --start <start city> --end <end city> --transportation-method <transportation method>
 ```
 ### Usage
-1. Input the source and destination cities
-2. Select a mode of transportation from the list
-3. Select the coordinates for cities from displayed coordinates
-4. The application displays the CO2-equivalent emission
+1. Input the source and destination cities.
+2. Select a mode of transportation from the list.
+3. Select the coordinates for cities from displayed coordinates.
+4. The application displays the CO2-equivalent emission.
 
 ### Command-line Arguments
 - `--start=START_CITY`
@@ -79,7 +79,7 @@ Command-line arguments can be put in any order and either use an equal sign(=) o
 
 ---
 ### 🚀 Future Enhancements
-- Interactive User Interface: Introduce a dynamic and user-friendly interface(using Java Swing)
+- Interactive User Interface: Introduce a dynamic and user-friendly interface (using Java Swing)
 - Multi-Language Support: Enable inputs and outputs in multiple languages
 - Historical Data Storage: Allows users to save and analyze past calculations
 - Multiple Destination Support: Add support for multiple stops and complex routes
