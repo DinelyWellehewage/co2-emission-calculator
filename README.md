@@ -105,7 +105,7 @@ Select a coordinate (0 to 10): (enter index):
 Your trip caused 49.2kg of CO2-equivalent.
 ```
 
-![CO2-Calculator-Example](https://github.com/user-attachments/assets/e8b2158c-3c1e-45b9-8979-9f1cd5094326)
+![CO2-Calculator](https://github.com/user-attachments/assets/851b0f8c-65b0-4cb2-86d2-204a7b08a1f0)
 
 
 ---
