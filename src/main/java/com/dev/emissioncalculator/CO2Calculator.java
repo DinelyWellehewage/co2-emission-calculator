@@ -23,15 +23,12 @@ public class CO2Calculator {
     private static final Logger logger = LoggerFactory.getLogger(CO2Calculator.class);
 
     public static void main(String[] args) {
-        System.setProperty("org.slf4j.LoggerFactory.defaultLogLevel", "INFO");
-        logger.info("Starting CO2 Emission Calculator");
         System.out.println("CO2 Emission Calculator");
         System.out.println("-------------------------");
 
         ApplicationContext applicationContext = new ApplicationContext();
         CO2EmissionService co2EmissionService = applicationContext.getCo2EmissionService();
         try {
-            logger.info("Passing command-line arguments");
             Map<String, String> arguments = applicationContext.getArgumentParser().parseArguments(args);
 
             String startCity = arguments.get("--start");
@@ -53,7 +50,6 @@ public class CO2Calculator {
                     startCity,endCity,transportationMethod);
             String co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
             System.out.println("Your trip caused " + co2Emission + "kg of CO2-equivalent.");
-            logger.info("Successfully calculated CO2 emission: {}kg",co2Emission);
         } catch (InvalidInputException exception) {
             logger.error("Invalid input error: {}",exception.getMessage(),exception);
             System.out.println("Error: " + exception.getMessage());

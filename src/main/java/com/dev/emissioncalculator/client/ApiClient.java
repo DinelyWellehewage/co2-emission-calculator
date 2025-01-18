@@ -52,8 +52,7 @@ public class ApiClient {
                     .build();
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            logger.info("Received response for GET request Status Code:{}",response.statusCode());
-
+            logger.debug("Received response for GET request Status Code: {}",response.statusCode());
             return handleResponse(response, responseType);
         } catch (Exception e) {
             logger.error("Error sending GET request ",e);
@@ -83,7 +82,7 @@ public class ApiClient {
 
             logger.debug("Request body: {}",body);
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            logger.info("Received response for POST request Status Code: {}",response.statusCode());
+            logger.debug("Received response for POST request Status Code: {}",response.statusCode());
 
             return handleResponse(response, responseType);
         } catch (Exception e) {

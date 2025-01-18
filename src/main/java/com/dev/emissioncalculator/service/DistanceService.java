@@ -53,7 +53,6 @@ public class DistanceService {
             logger.debug("Constructed Matrix API request payload: {}",payload);
 
             MatrixResponse matrixResponse = apiClient.sendPostRequest(urlString, payload, ApiClient.APIKEY, MatrixResponse.class);
-            logger.info("Received response from Matrix API for coordinates: {}",coordinates);
 
             List<List<Double>> distanceMatrix =  matrixResponse.getDistances();
             List<List<Double>> filteredDistances = filterDistances(distanceMatrix);
@@ -61,7 +60,7 @@ public class DistanceService {
 
             if (!filteredDistances.isEmpty() && !filteredDistances.get(0).isEmpty()){
                 Double distance = filteredDistances.get(0).get(0);
-                logger.info("Calculated distance: {} meters",distance);
+                logger.debug("Calculated distance: {} meters",distance);
                 return distance;
             }else {
                 logger.warn("No valid distances found for coordinates: {}",coordinates);

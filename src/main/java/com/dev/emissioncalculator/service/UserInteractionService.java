@@ -54,8 +54,6 @@ public class UserInteractionService {
                 if (selectedIndex < 0 || selectedIndex >= maxIndex) {
                     logger.warn("Invalid index selected: {}. Must be between 1 and {}", selectedIndex + 1, maxIndex);
                     System.out.println("Invalid Index.Please Try again.");
-                } else {
-                    logger.info("User selected index: {}", selectedIndex);
                 }
             } else {
                 logger.error("Invalid input provided: {}", input);

@@ -23,7 +23,6 @@ public class ArgumentParser {
      */
 
     public Map<String, String> parseArguments(String[] args) {
-        logger.info("Parsing command-line arguments: {}",Arrays.toString(args));
         Map<String, String> argsMap = new HashMap<>();
         for (String arg : args) {
             if (arg.contains("=")) {
@@ -41,7 +40,6 @@ public class ArgumentParser {
                 argsMap.put(key, value);
             }
         }
-        logger.info("Completed parsing arguments. Parsed map: {}",argsMap);
         return argsMap;
     }
 }

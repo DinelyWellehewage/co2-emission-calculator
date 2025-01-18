@@ -53,7 +53,6 @@ public class CityService {
                     URLEncoder.encode(LAYER_LOCALITY, StandardCharsets.UTF_8));
 
             GeoCodingResponse geoCodingResponse = apiClient.sendGetRequest(urlString, GeoCodingResponse.class);
-            logger.info("Received response for city: {}",cityName);
 
             List<LocationInfo> locationInfos = Optional.ofNullable(geoCodingResponse)
                     .map(GeoCodingResponse::getFeatures)
@@ -67,7 +66,7 @@ public class CityService {
                             .collect(Collectors.toList()))
                     .orElse(Collections.emptyList());
 
-            logger.info("Found {} locations for city: {}",locationInfos.size(),cityName);
+            logger.debug("Found {} locations for city: {}",locationInfos.size(),cityName);
             logger.debug("Locations: {}",locationInfos);
 
             return locationInfos;

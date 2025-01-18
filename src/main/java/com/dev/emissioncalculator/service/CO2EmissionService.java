@@ -38,8 +38,6 @@ public class CO2EmissionService {
      * @return the calculated CO2 emissions as a formatted string
      */
     public String calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
-        logger.info("Calculating CO2 emissions for transportation method: {}, from: {}, to: {}",
-                transportationMethod,startCity,endCity);
         try {
             VehicleType vehicleType = handleTransportationMethod(transportationMethod);
             logger.debug("Identified VehicleType: {}",vehicleType);
@@ -51,10 +49,8 @@ public class CO2EmissionService {
             logger.debug("Selected end city coordinates: {}",selectedEndCityCoordinates);
 
             double distance = getDistance(selectedStartCityCoordinates, selectedEndCityCoordinates);
-            logger.info("Calculated distance: {} meters",distance);
 
             double emission = vehicleType.calculateEmission(distance);
-            logger.info("Calculated CO2 emissions: {}",emission);
 
             return String.format("%.1f", emission);
         } catch (InvalidInputException exception) {
@@ -78,7 +74,6 @@ public class CO2EmissionService {
      */
 
     private List<Double> selectCityCoordinate(String cityName) {
-        logger.info("Fetching coodinates for city: {}",cityName);
         List<LocationInfo> cityCoordinates = cityService.getCityCoordinates(cityName);
         if (cityCoordinates.isEmpty()) {
             logger.warn("No coordinates found for city: {}",cityName);
