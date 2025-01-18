@@ -94,7 +94,7 @@ public class CO2EmissionService {
      */
 
     private double getDistance(List<Double> selectedStartCityCoordinates, List<Double> selectedEndCityCoordinates) {
-        logger.debug("Calculating distance between coordiantes: {} and {}", selectedStartCityCoordinates, selectedEndCityCoordinates);
+        logger.debug("Calculating distance between coordinates: {} and {}", selectedStartCityCoordinates, selectedEndCityCoordinates);
         List<List<Double>> coordinates = new ArrayList<>();
         coordinates.add(selectedStartCityCoordinates);
         coordinates.add(selectedEndCityCoordinates);
