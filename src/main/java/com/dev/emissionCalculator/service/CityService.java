@@ -51,7 +51,6 @@ public class CityService {
                     URLEncoder.encode(APIKEY, StandardCharsets.UTF_8),
                     URLEncoder.encode(cityName, StandardCharsets.UTF_8),
                     URLEncoder.encode(LAYER_LOCALITY, StandardCharsets.UTF_8));
-            logger.debug("Constructed Geocode API URL: {}",urlString);
 
             GeoCodingResponse geoCodingResponse = apiClient.sendGetRequest(urlString, GeoCodingResponse.class);
             logger.info("Received response for city: {}",cityName);

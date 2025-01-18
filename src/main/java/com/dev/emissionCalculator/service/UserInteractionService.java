@@ -23,7 +23,7 @@ public class UserInteractionService {
      */
 
     public int displayCityCoordinates(List<LocationInfo> coordinates,String cityName) {
-        logger.info("Displaying coordinates for city:{}",cityName);
+        logger.info("Displaying coordinates for city: {}",cityName);
         System.out.println();
         System.out.println(String.format("Available Coordinates for %s with Country and Region",cityName));
         for (int i = 0; i < coordinates.size(); i++) {

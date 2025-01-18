@@ -45,20 +45,18 @@ public class ApiClient {
      */
 
     public <T> T sendGetRequest(String urlString, Class<T> responseType) {
-        logger.info("Sending GET request to URL: {}",urlString);
         try {
             URI uri = URI.create(urlString);
             HttpRequest request = HttpRequest.newBuilder(uri)
                     .GET()
                     .build();
 
-            logger.debug("GET request built: {}",request);
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            logger.info("Received response for GET request to URL: {}, Status Code:{}",urlString,response.statusCode());
+            logger.info("Received response for GET request Status Code:{}",response.statusCode());
 
             return handleResponse(response, responseType);
         } catch (Exception e) {
-            logger.error("Error sending GET request to URL: {}",urlString,e);
+            logger.error("Error sending GET request ",e);
             throw new ApiClientException("Error sending GET request: " + e.getMessage(), e);
         }
     }
@@ -75,7 +73,6 @@ public class ApiClient {
      * @throws ApiClientException if the request fails or the response cannot be processed
      */
     public <T> T sendPostRequest(String urlString, String body, String apiKey, Class<T> responseType) {
-        logger.info("Sending POST request to URL: {}",urlString);
         try {
             URI uri = URI.create(urlString);
             HttpRequest request = HttpRequest.newBuilder(uri)
@@ -84,14 +81,13 @@ public class ApiClient {
                     .POST(HttpRequest.BodyPublishers.ofString(body))
                     .build();
 
-            logger.debug("POST request built: {}",request);
             logger.debug("Request body: {}",body);
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            logger.info("Received response for POST request to URL: {}, Status Code: {}",urlString,response.statusCode());
+            logger.info("Received response for POST request Status Code: {}",response.statusCode());
 
             return handleResponse(response, responseType);
         } catch (Exception e) {
-            logger.error("Error sending POST request to URL: {}",urlString,e);
+            logger.error("Error sending POST request ",e);
             throw new ApiClientException("Error sending POST request: " + e.getMessage(), e);
         }
     }
