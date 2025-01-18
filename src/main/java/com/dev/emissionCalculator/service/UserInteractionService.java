@@ -1,6 +1,8 @@
 package com.dev.emissionCalculator.service;
 
 import com.dev.emissionCalculator.model.response.LocationInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +13,7 @@ import java.util.Scanner;
  */
 public class UserInteractionService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserInteractionService.class);
     /**
      * Display a list of available coordinates along with their associated country and region
      * and allows the user to select one
@@ -20,6 +23,7 @@ public class UserInteractionService {
      */
 
     public int displayCityCoordinates(List<LocationInfo> coordinates,String cityName) {
+        logger.info("Displaying coordinates for city:{}",cityName);
         System.out.println();
         System.out.println(String.format("Available Coordinates for %s with Country and Region",cityName));
         for (int i = 0; i < coordinates.size(); i++) {
@@ -43,12 +47,17 @@ public class UserInteractionService {
         while (selectedIndex<0 || selectedIndex>=maxIndex) {
             System.out.println(String.format("Select a coordinate (1 to %d):",(maxIndex)));
             String input = scanner.nextLine().trim();
+            logger.debug("User input received: {}",input);
             if (!input.isEmpty() && input.matches("\\d+")){
                 selectedIndex = Integer.parseInt(input)-1;
                 if (selectedIndex<0 || selectedIndex>=maxIndex){
+                    logger.warn("Invalid index selected: {}. Must be between 1 and {}",selectedIndex+1,maxIndex);
                     System.out.println("Invalid Index.Please Try again.");
+                }else {
+                    logger.info("User selected index: {}",selectedIndex);
                 }
             }else{
+                logger.error("Invalid input provided: {}",input);
                 System.out.println("Invalid input. Please enter a number");
             }
         }

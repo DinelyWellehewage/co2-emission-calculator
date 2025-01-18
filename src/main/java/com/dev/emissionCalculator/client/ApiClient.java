@@ -9,6 +9,8 @@ import java.util.Optional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.dev.emissionCalculator.util.constant.AppConstant.ORS_TOKEN;
 
@@ -19,7 +21,9 @@ import static com.dev.emissionCalculator.util.constant.AppConstant.ORS_TOKEN;
 
 public class ApiClient {
 
-    //API key used for authentication, retrieved from environment variable
+    private static final Logger logger = LoggerFactory.getLogger(ApiClient.class);
+
+    //API key used for authentication, retrieved from environment variable.
     public static final String APIKEY = Optional.ofNullable(System.getenv(ORS_TOKEN))
             .orElseThrow(() -> new IllegalArgumentException("API key not found. Please set ORS_TOKEN variable"));
 
@@ -28,11 +32,10 @@ public class ApiClient {
 
     public ApiClient() {
         this.httpClient = HttpClient.newHttpClient();
-        ;
     }
 
     /**
-     * Sends an HTTP GET request to the specified URL and process the response
+     * Sends an HTTP GET request to the specified URL and process the response.
      *
      * @param urlString    the URL to send the GET request
      * @param responseType the class type of expected response
@@ -42,21 +45,26 @@ public class ApiClient {
      */
 
     public <T> T sendGetRequest(String urlString, Class<T> responseType) {
+        logger.info("Sending GET request to URL: {}",urlString);
         try {
             URI uri = URI.create(urlString);
             HttpRequest request = HttpRequest.newBuilder(uri)
                     .GET()
                     .build();
 
+            logger.debug("GET request built: {}",request);
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            logger.info("Received response for GET request to URL: {}, Status Code:{}",urlString,response.statusCode());
+
             return handleResponse(response, responseType);
         } catch (Exception e) {
+            logger.error("Error sending GET request to URL: {}",urlString,e);
             throw new ApiClientException("Error sending GET request: " + e.getMessage(), e);
         }
     }
 
     /**
-     * Sends an HTTP POST request to the specified URL and process the response
+     * Sends an HTTP POST request to the specified URL and process the response.
      *
      * @param urlString    the URL to send the POST request
      * @param body         the request body to POST request
@@ -67,6 +75,7 @@ public class ApiClient {
      * @throws ApiClientException if the request fails or the response cannot be processed
      */
     public <T> T sendPostRequest(String urlString, String body, String apiKey, Class<T> responseType) {
+        logger.info("Sending POST request to URL: {}",urlString);
         try {
             URI uri = URI.create(urlString);
             HttpRequest request = HttpRequest.newBuilder(uri)
@@ -75,15 +84,20 @@ public class ApiClient {
                     .POST(HttpRequest.BodyPublishers.ofString(body))
                     .build();
 
+            logger.debug("POST request built: {}",request);
+            logger.debug("Request body: {}",body);
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            logger.info("Received response for POST request to URL: {}, Status Code: {}",urlString,response.statusCode());
+
             return handleResponse(response, responseType);
         } catch (Exception e) {
+            logger.error("Error sending POST request to URL: {}",urlString,e);
             throw new ApiClientException("Error sending POST request: " + e.getMessage(), e);
         }
     }
 
     /**
-     * Handles an HTTP response,checking the status code and deserializing the response body
+     * Handles an HTTP response,checking the status code and deserializing the response body.
      *
      * @param response     the HTTP response to process
      * @param responseType the class type of expected response
@@ -92,14 +106,18 @@ public class ApiClient {
      * @throws ApiClientException if response status is not 200 or JSON processing fails
      */
     private <T> T handleResponse(HttpResponse<String> response, Class<T> responseType) {
-
+        logger.debug("Handling HTTP response, Status Code: {},Body: {}",response.statusCode(),response.body());
         if (response.statusCode() == 200) {
             try {
-                return objectMapper.readValue(response.body(), responseType);
+                T result = objectMapper.readValue(response.body(), responseType);
+                logger.debug("Deserialized response: {}",result);
+                return result;
             } catch (JsonProcessingException e) {
+                logger.error("Error processing JSON response",e);
                 throw new ApiClientException("Error processing JSON response", e);
             }
         } else {
+            logger.error("HTTP request failed with status code: {}, Body: {}",response.statusCode(),response.body());
             throw new ApiClientException("HTTP request failed with status code: " + response.statusCode() + ",Body: " + response.body());
         }
     }
