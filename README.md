@@ -68,22 +68,13 @@ Valid options for --transportation-method are:
 
 #### Valid Options for Transportation Method
 
-| **Vehicle Type** | **Transportation Method** |
-|-------------------|---------------------------|
-| **Small Cars**    | `diesel-car-small`        |
-|                   | `petrol-car-small`        |
-|                   | `plugin-hybrid-car-small` |
-|                   | `electric-car-small`      |
-| **Medium Cars**   | `diesel-car-medium`       |
-|                   | `petrol-car-medium`       |
-|                   | `plugin-hybrid-car-medium` |
-|                   | `electric-car-medium`     |
-| **Large Cars**    | `diesel-car-large`        |
-|                   | `petrol-car-large`        |
-|                   | `plugin-hybrid-car-large` |
-|                   | `electric-car-large`      |
-| **Bus**           | `bus-default`             |
-| **Train**         | `train-default`           |
+| Vehicle Type     | Transportation Method                                                                       |
+|------------------|---------------------------------------------------------------------------------------------|
+| Small Cars       | `diesel-car-small`, `petrol-car-small`, `plugin-hybrid-car-small`, `electric-car-small`     |
+| Medium Cars      | `diesel-car-medium`, `petrol-car-medium`, `plugin-hybrid-car-medium`, `electric-car-medium` |
+| Large Cars       | `diesel-car-large`, `petrol-car-large`, `plugin-hybrid-car-large`, `electric-car-large`     |
+| Public Transport | `bus-default`, `train-default`                                                              |
+
 
 Example:
 
