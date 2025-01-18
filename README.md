@@ -78,6 +78,7 @@ Command-line arguments can be put in any order and either use an equal sign(=) o
 | Public Transport | `bus-default`, `train-default`                                                              |
 
 ---
+
 ### 🚀 Future Enhancements
 - Interactive User Interface: Introduce a dynamic and user-friendly interface (using Java Swing)
 - Multi-Language Support: Enable inputs and outputs in multiple languages
