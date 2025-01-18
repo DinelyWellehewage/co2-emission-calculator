@@ -3,7 +3,6 @@
 The **Co2 Emission Calculator** is a Java-based application designed to estimate the CO2-equivalent emissions produced when travelling a specified distance using a chosen mode of transportation.
 
 ---
-
 ## Features
 
 - **Calculate CO2 Emissions**: Computes emissions based on distance and transportation mode.
