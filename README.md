@@ -4,6 +4,8 @@ The **Co2 Emission Calculator** is a Java-based application designed to estimate
 
 ![CO2-Calculator](https://github.com/user-attachments/assets/851b0f8c-65b0-4cb2-86d2-204a7b08a1f0)
 
+---
+
 ## Features
 
 - **Calculate CO2 Emissions**: Computes emissions based on distance and transportation mode.
