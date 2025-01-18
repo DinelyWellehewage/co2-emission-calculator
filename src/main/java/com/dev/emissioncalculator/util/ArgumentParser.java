@@ -15,6 +15,7 @@ import java.util.Map;
 public class ArgumentParser {
 
     private static final Logger logger = LoggerFactory.getLogger(ArgumentParser.class);
+
     /**
      * Returns a map of key-value pairs for command line arguments.
      *

@@ -34,14 +34,14 @@ public class ApplicationContext {
         this.cityService = new CityService(apiClient);
         this.distanceService = new DistanceService(apiClient);
         this.userInteractionService = new UserInteractionService();
-        this.co2EmissionService = new CO2EmissionService(cityService,distanceService,userInteractionService);
+        this.co2EmissionService = new CO2EmissionService(cityService, distanceService, userInteractionService);
         this.argumentParser = new ArgumentParser();
     }
 
     /**
      * Provides the CO2EmissionService instance for emission calculation.
      */
-    public CO2EmissionService getCo2EmissionService(){
+    public CO2EmissionService getCo2EmissionService() {
         return co2EmissionService;
     }
 
@@ -49,7 +49,7 @@ public class ApplicationContext {
      * Provides the ArgumentParser instance for parsing command-line arguments
      */
 
-    public ArgumentParser getArgumentParser(){
+    public ArgumentParser getArgumentParser() {
         return argumentParser;
     }
 }

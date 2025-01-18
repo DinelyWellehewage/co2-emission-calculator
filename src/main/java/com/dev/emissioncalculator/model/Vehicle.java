@@ -22,7 +22,7 @@ public abstract class Vehicle {
      */
 
     public double calculateEmissions(double distance) {
-        return ((distance/1000) * getCo2Emission()) / 1000 ;
+        return ((distance / 1000) * getCo2Emission()) / 1000;
     }
 
 }

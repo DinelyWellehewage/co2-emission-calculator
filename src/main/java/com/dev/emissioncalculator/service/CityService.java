@@ -36,7 +36,7 @@ public class CityService {
     }
 
     /**
-     *Retrieves the geographical information for a given city name.
+     * Retrieves the geographical information for a given city name.
      *
      * @param cityName the name of the city to fetch coordinates
      * @return a list of objects containing location information
@@ -44,7 +44,7 @@ public class CityService {
      */
 
     public List<LocationInfo> getCityCoordinates(String cityName) {
-        logger.info("Fetching coordinates for city: {}",cityName);
+        logger.info("Fetching coordinates for city: {}", cityName);
         try {
             String urlString = String.format("%s?api_key=%s&text=%s&layers=%s",
                     GEOCODE_BASE_URL,
@@ -66,12 +66,12 @@ public class CityService {
                             .collect(Collectors.toList()))
                     .orElse(Collections.emptyList());
 
-            logger.debug("Found {} locations for city: {}",locationInfos.size(),cityName);
-            logger.debug("Locations: {}",locationInfos);
+            logger.debug("Found {} locations for city: {}", locationInfos.size(), cityName);
+            logger.debug("Locations: {}", locationInfos);
 
             return locationInfos;
         } catch (Exception e) {
-            logger.error("Error fetching coordinates for city: {}",cityName,e);
+            logger.error("Error fetching coordinates for city: {}", cityName, e);
             throw new ApiClientException("Error fetching coordinates for city: " + e.getMessage());
         }
     }

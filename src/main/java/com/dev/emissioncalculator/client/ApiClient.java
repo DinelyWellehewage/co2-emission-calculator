@@ -52,10 +52,10 @@ public class ApiClient {
                     .build();
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            logger.debug("Received response for GET request Status Code: {}",response.statusCode());
+            logger.debug("Received response for GET request Status Code: {}", response.statusCode());
             return handleResponse(response, responseType);
         } catch (Exception e) {
-            logger.error("Error sending GET request ",e);
+            logger.error("Error sending GET request ", e);
             throw new ApiClientException("Error sending GET request: " + e.getMessage(), e);
         }
     }
@@ -80,13 +80,13 @@ public class ApiClient {
                     .POST(HttpRequest.BodyPublishers.ofString(body))
                     .build();
 
-            logger.debug("Request body: {}",body);
+            logger.debug("Request body: {}", body);
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            logger.debug("Received response for POST request Status Code: {}",response.statusCode());
+            logger.debug("Received response for POST request Status Code: {}", response.statusCode());
 
             return handleResponse(response, responseType);
         } catch (Exception e) {
-            logger.error("Error sending POST request ",e);
+            logger.error("Error sending POST request ", e);
             throw new ApiClientException("Error sending POST request: " + e.getMessage(), e);
         }
     }
@@ -101,18 +101,18 @@ public class ApiClient {
      * @throws ApiClientException if response status is not 200 or JSON processing fails
      */
     private <T> T handleResponse(HttpResponse<String> response, Class<T> responseType) {
-        logger.debug("Handling HTTP response, Status Code: {},Body: {}",response.statusCode(),response.body());
+        logger.debug("Handling HTTP response, Status Code: {},Body: {}", response.statusCode(), response.body());
         if (response.statusCode() == 200) {
             try {
                 T result = objectMapper.readValue(response.body(), responseType);
-                logger.debug("Deserialized response: {}",result);
+                logger.debug("Deserialized response: {}", result);
                 return result;
             } catch (JsonProcessingException e) {
-                logger.error("Error processing JSON response",e);
+                logger.error("Error processing JSON response", e);
                 throw new ApiClientException("Error processing JSON response", e);
             }
         } else {
-            logger.error("HTTP request failed with status code: {}, Body: {}",response.statusCode(),response.body());
+            logger.error("HTTP request failed with status code: {}, Body: {}", response.statusCode(), response.body());
             throw new ApiClientException("HTTP request failed with status code: " + response.statusCode() + ",Body: " + response.body());
         }
     }

@@ -26,7 +26,7 @@ The **Co2 Emission Calculator** is a Java-based application designed to estimate
 - Maven 3.x
 - OpenRouteService API key (obstainable from [OpenRouteService](https://openrouteservice.org/))
 
-### ⚙️Build
+### ⚙️ Build
 Follow the steps outlined below to get started.
 
 1. CLone the repository

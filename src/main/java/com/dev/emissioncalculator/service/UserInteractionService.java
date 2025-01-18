@@ -45,7 +45,7 @@ public class UserInteractionService {
 
     private int getUserSelectedIndex(int maxIndex) {
         //if only one coordinate is available, there is no need to prompt the user for input
-        if (maxIndex==1){
+        if (maxIndex == 1) {
             return 0;
         }
 
