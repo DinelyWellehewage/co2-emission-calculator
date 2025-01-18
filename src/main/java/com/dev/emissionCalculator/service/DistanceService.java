@@ -7,6 +7,8 @@ import com.dev.emissionCalculator.client.ApiClient;
 import com.dev.emissionCalculator.model.response.MatrixResponse;
 import com.dev.emissionCalculator.model.request.MatrixRequest;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,11 +17,13 @@ import static com.dev.emissionCalculator.util.constant.AppConstant.*;
 
 /**
  * DistanceService class provides functionality to retrieve distance between two geographical coordinates.
- * It uses Matrix API to process the request
+ * It uses Matrix API to process the request.
  * {@link <a href="https://openrouteservice.org/dev/#/api-docs/v2/matrix/">Matrix API</a>}
  */
 
 public class DistanceService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DistanceService.class);
 
     private ApiClient apiClient;
 
@@ -28,13 +32,12 @@ public class DistanceService {
     }
 
     /**
-     * Calculates the distance between two geographic coordinates using MATRIX API
+     * Calculates the distance between two geographic coordinates using MATRIX API.
      *
      *
      * @see <a href="https://giscience.github.io/openrouteservice/api-reference/endpoints/matrix/">MATRIX API Documentation</a>
-     * The MATRIX API allows to specify source and destination coordinates to calculate
-     * the distance between them.
-     * This method returns the calculated distance from the start city to end city
+     * The MATRIX API allows to specify source and destination coordinates to calculate the distance between them.
+     * This method returns the calculated distance from the start city to end city.
      *
      * @param coordinates a list of geographic coordinates
      * @return the distance in meters from source and destination coordinates
@@ -43,32 +46,45 @@ public class DistanceService {
      */
 
     public double getDistanceMatrix(List<List<Double>> coordinates) {
+        logger.info("Calculating distance matrix for coordinates: {}",coordinates);
         String urlString = MATRIX_BASE_URL + PROFILE;
         try {
             String payload = buildRequestPayload(coordinates);
+            logger.debug("Constructed Matrix API request payload: {}",payload);
+
             MatrixResponse matrixResponse = apiClient.sendPostRequest(urlString, payload, ApiClient.APIKEY, MatrixResponse.class);
+            logger.info("Received response from Matrix API for coordinates: {}",coordinates);
+
             List<List<Double>> distanceMatrix =  matrixResponse.getDistances();
             List<List<Double>> filteredDistances = filterDistances(distanceMatrix);
+            logger.debug("Filtered distance matrix: {}",filteredDistances);
+
             if (!filteredDistances.isEmpty() && !filteredDistances.get(0).isEmpty()){
-                return filteredDistances.get(0).get(0);
+                Double distance = filteredDistances.get(0).get(0);
+                logger.info("Calculated distance: {} meters",distance);
+                return distance;
             }else {
-                throw new InvalidInputException("No valid distances found");
+                logger.warn("No valid distances found for coordinates: {}",coordinates);
+                throw new InvalidInputException("No valid distances found: ");
             }
         } catch (InvalidInputException e) {
+            logger.error("Invalid input exception while calculating distance matrix",e);
             throw new InvalidInputException(e.getMessage(),e);
         } catch (Exception e) {
-            throw new ApiClientException("Error occurred while fetching distance matrix", e);
+            logger.error("Error occurred while fetching distance matrix for coordinates: {}",coordinates,e);
+            throw new ApiClientException("Error occurred while fetching distance matrix: ", e);
         }
     }
 
     /**
-     * Filter distance matrix to remove null values
+     * Filter distance matrix to remove null values.
      *
-     * @param distanceMatrix the distance matrix retrived from API
+     * @param distanceMatrix the distance matrix retrieved from API
      * @return a filtered distance matrix containing non-null values
      */
 
     private List<List<Double>> filterDistances(List<List<Double>> distanceMatrix) {
+        logger.debug("Filtering distance matrix to remove null values: {}",distanceMatrix);
         return distanceMatrix.stream()
                 .map(list->list.stream()
                         .filter(value->value!=null )
@@ -78,7 +94,7 @@ public class DistanceService {
     }
 
     /**
-     * Builds the JSON payload for the matrix API request
+     * Builds the JSON payload for the matrix API request.
      *
      * @param coordinates a list of geographical coordinates
      * @return a JSON string to represent request payload
@@ -86,6 +102,7 @@ public class DistanceService {
      */
 
     private String buildRequestPayload(List<List<Double>> coordinates) {
+        logger.debug("Building request payload for coordinates: {}",coordinates);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             MatrixRequest matrixRequest = new MatrixRequest();
@@ -93,9 +110,12 @@ public class DistanceService {
             matrixRequest.setMetrics(List.of(METRICS));
             matrixRequest.setSources(List.of("0"));
             matrixRequest.setDestinations(List.of("1"));
-            return objectMapper.writeValueAsString(matrixRequest);
+            String payload = objectMapper.writeValueAsString(matrixRequest);
+            logger.debug("Constructed JSON payload: {}",payload);
+            return payload;
         } catch (JsonProcessingException e) {
-            throw new ApiClientException("Error occurred while fetching distance matrix", e);
+            logger.error("Error occurred while serializing request payload for coordinates: {}",coordinates,e);
+            throw new ApiClientException("Error occurred while fetching distance matrix: ", e);
         }
 
     }
