@@ -97,7 +97,6 @@ public class DistanceService {
      * @return a JSON string to represent request payload
      * @throws ApiClientException if an error occurs during JSON serialization
      */
-
     private String buildRequestPayload(List<List<Double>> coordinates) {
         logger.debug("Building request payload for coordinates: {}", coordinates);
         ObjectMapper objectMapper = new ObjectMapper();
