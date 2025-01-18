@@ -61,8 +61,7 @@ public class DistanceService {
                 logger.debug("Calculated distance: {} meters", distance);
                 return distance;
             } else {
-                logger.warn("No valid distances found for coordinates: {}", coordinates);
-                throw new InvalidInputException("No valid distances found: ");
+                throw new InvalidInputException("No valid distances found");
             }
         } catch (InvalidInputException e) {
             logger.error("Invalid input exception while calculating distance matrix: {}", e.getMessage());
