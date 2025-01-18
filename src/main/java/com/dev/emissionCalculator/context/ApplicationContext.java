@@ -6,9 +6,16 @@ import com.dev.emissionCalculator.service.CityService;
 import com.dev.emissionCalculator.service.DistanceService;
 import com.dev.emissionCalculator.service.UserInteractionService;
 import com.dev.emissionCalculator.util.ArgumentParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * ApplicationContext initializes and manages the dependencies for the application.
+ */
 
 public class ApplicationContext {
+
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationContext.class);
 
     private ApiClient apiClient;
     private CityService cityService;
@@ -17,8 +24,12 @@ public class ApplicationContext {
     private CO2EmissionService co2EmissionService;
     private ArgumentParser argumentParser;
 
+    /*
+     * Initializes the application context and all required services.
+     */
 
     public ApplicationContext() {
+        logger.info("Initializing ApplicationContext...");
         this.apiClient = new ApiClient();
         this.cityService = new CityService(apiClient);
         this.distanceService = new DistanceService(apiClient);
@@ -27,9 +38,16 @@ public class ApplicationContext {
         this.argumentParser = new ArgumentParser();
     }
 
+    /**
+     * Provides the CO2EmissionService instance for emission calculation.
+     */
     public CO2EmissionService getCo2EmissionService(){
         return co2EmissionService;
     }
+
+    /**
+     * Provides the ArgumentParser instance for parsing command-line arguments
+     */
 
     public ArgumentParser getArgumentParser(){
         return argumentParser;
