@@ -68,7 +68,6 @@ java -jar co2-calculator.jar --start <start city> --end <end city> --transportat
 
 Command-line arguments can be put in any order and either use an equal sign(=) or a space ( ) between key and value.
 
-
 #### Valid Options for Transportation Method
 
 | Vehicle Type     | Transportation Method                                                                       |
