@@ -4,6 +4,8 @@ import com.dev.emissionCalculator.model.VehicleType;
 import com.dev.emissionCalculator.model.response.LocationInfo;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
 import com.dev.emissionCalculator.util.exception.InvalidInputException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
  * and the transportation method
  */
 public class CO2EmissionService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CO2EmissionService.class);
 
     private CityService cityService;
     private DistanceService distanceService;
@@ -34,21 +38,33 @@ public class CO2EmissionService {
      * @return the calculated CO2 emissions as a formatted string
      */
     public String calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
+        logger.info("Calculating CO2 emissions for transportation method: {}, from: {}, to: {}",
+                transportationMethod,startCity,endCity);
         try {
             VehicleType vehicleType = handleTransportationMethod(transportationMethod);
+            logger.debug("Identified VehicleType: {}",vehicleType);
 
             List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity);
+            logger.debug("Selected start city coordinates: {}",selectedStartCityCoordinates);
+
             List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity);
+            logger.debug("Selected end city coordinates: {}",selectedEndCityCoordinates);
 
             double distance = getDistance(selectedStartCityCoordinates, selectedEndCityCoordinates);
+            logger.info("Calculated distance: {} meters",distance);
+
             double emission = vehicleType.calculateEmission(distance);
+            logger.info("Calculated CO2 emissions: {}",emission);
 
             return String.format("%.1f", emission);
         } catch (InvalidInputException exception) {
+            logger.error("Invalid input error: {}",exception.getMessage());
             throw new InvalidInputException("Invalid input: " + exception.getMessage());
         } catch (ApiClientException exception) {
+            logger.error("API client error: {}",exception.getMessage());
             throw new ApiClientException("API Client Error" + exception.getMessage());
         } catch (Exception exception) {
+            logger.error("Unexpected error occured: {}",exception.getMessage());
             throw new RuntimeException("An unexpected Error occurred" + exception.getMessage());
         }
 
@@ -62,12 +78,15 @@ public class CO2EmissionService {
      */
 
     private List<Double> selectCityCoordinate(String cityName) {
+        logger.info("Fetching coodinates for city: {}",cityName);
         List<LocationInfo> cityCoordinates = cityService.getCityCoordinates(cityName);
         if (cityCoordinates.isEmpty()) {
+            logger.warn("No coordinates found for city: {}",cityName);
             throw new InvalidInputException("No coordinates found for city: " + cityName);
         }
         int cityIndex = userInteractionService.displayCityCoordinates(cityCoordinates,cityName);
         LocationInfo selectedLocationInfo = cityCoordinates.get(cityIndex);
+        logger.debug("User selected location: {}",selectedLocationInfo);
         return selectedLocationInfo.getCoordinates();
     }
 
@@ -80,11 +99,14 @@ public class CO2EmissionService {
      */
 
     private double getDistance(List<Double> selectedStartCityCoordinates, List<Double> selectedEndCityCoordinates) {
+        logger.debug("Calculating distance between coordiantes: {} and {}",selectedStartCityCoordinates,selectedEndCityCoordinates);
         List<List<Double>> coordinates = new ArrayList<>();
         coordinates.add(selectedStartCityCoordinates);
         coordinates.add(selectedEndCityCoordinates);
-        return distanceService.getDistanceMatrix(coordinates);
 
+        double distanceMatrix = distanceService.getDistanceMatrix(coordinates);
+        logger.debug("Calculated distance: {} meters",distanceMatrix);
+        return distanceMatrix;
     }
 
     /**
@@ -95,9 +117,11 @@ public class CO2EmissionService {
      * @throws InvalidInputException if transportation method is invalid
      */
     private VehicleType handleTransportationMethod(String transportationMethod) {
+        logger.debug("Handling transportation method: {}",transportationMethod);
         try {
             return VehicleType.valueOf(transportationMethod.toUpperCase().replace("-", "_"));
         } catch (IllegalArgumentException e) {
+            logger.error("Invalid transportation method: {}",transportationMethod);
             throw new InvalidInputException("Invalid transport method: " + transportationMethod);
         }
     }
