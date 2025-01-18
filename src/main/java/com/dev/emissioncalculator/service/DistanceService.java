@@ -65,10 +65,10 @@ public class DistanceService {
                 throw new InvalidInputException("No valid distances found: ");
             }
         } catch (InvalidInputException e) {
-            logger.error("Invalid input exception while calculating distance matrix", e);
+            logger.error("Invalid input exception while calculating distance matrix: {}", e.getMessage());
             throw new InvalidInputException(e.getMessage(), e);
         } catch (Exception e) {
-            logger.error("Error occurred while fetching distance matrix for coordinates: {}", coordinates, e);
+            logger.error("Error occurred while fetching distance matrix for coordinates: {}, Error: {}", coordinates, e.getMessage());
             throw new ApiClientException("Error occurred while fetching distance matrix: ", e);
         }
     }
@@ -110,7 +110,7 @@ public class DistanceService {
             logger.debug("Constructed JSON payload: {}", payload);
             return payload;
         } catch (JsonProcessingException e) {
-            logger.error("Error occurred while serializing request payload for coordinates: {}", coordinates, e);
+            logger.error("Error occurred while serializing request payload for coordinates: {}, Error: {}", coordinates, e.getMessage());
             throw new ApiClientException("Error occurred while fetching distance matrix: ", e);
         }
 

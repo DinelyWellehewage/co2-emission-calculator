@@ -51,13 +51,13 @@ public class CO2Calculator {
             String co2Emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);
             System.out.println("Your trip caused " + co2Emission + "kg of CO2-equivalent.");
         } catch (InvalidInputException exception) {
-            logger.error("Invalid input error: {}", exception.getMessage(), exception);
+            logger.error("Invalid input error: {}", exception.getMessage());
             System.out.println("Error: " + exception.getMessage());
         } catch (ApiClientException exception) {
-            logger.error("API client error: {}", exception.getMessage(), exception);
+            logger.error("API client error: {}", exception.getMessage());
             System.out.println("API Error: " + exception.getMessage());
         } catch (Exception exception) {
-            logger.error("Unexpected error occurred: {}", exception.getMessage(), exception);
+            logger.error("Unexpected error occurred: {}", exception.getMessage());
             System.out.println("An unexpected error occurred: " + exception.getMessage());
         }
     }

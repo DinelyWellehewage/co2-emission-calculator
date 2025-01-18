@@ -55,7 +55,7 @@ public class ApiClient {
             logger.debug("Received response for GET request Status Code: {}", response.statusCode());
             return handleResponse(response, responseType);
         } catch (Exception e) {
-            logger.error("Error sending GET request ", e);
+            logger.error("Error sending GET request: {}", e.getMessage());
             throw new ApiClientException("Error sending GET request: " + e.getMessage(), e);
         }
     }
@@ -86,7 +86,7 @@ public class ApiClient {
 
             return handleResponse(response, responseType);
         } catch (Exception e) {
-            logger.error("Error sending POST request ", e);
+            logger.error("Error sending POST request: {}", e.getMessage());
             throw new ApiClientException("Error sending POST request: " + e.getMessage(), e);
         }
     }

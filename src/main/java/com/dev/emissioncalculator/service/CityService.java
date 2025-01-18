@@ -71,7 +71,7 @@ public class CityService {
 
             return locationInfos;
         } catch (Exception e) {
-            logger.error("Error fetching coordinates for city: {}", cityName, e);
+            logger.error("Error fetching coordinates for city: {}, Error: {}", cityName, e.getMessage());
             throw new ApiClientException("Error fetching coordinates for city: " + e.getMessage());
         }
     }
