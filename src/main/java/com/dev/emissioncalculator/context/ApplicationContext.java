@@ -29,7 +29,7 @@ public class ApplicationContext {
      */
 
     public ApplicationContext() {
-        logger.info("Initializing ApplicationContext...");
+        logger.debug("Initializing ApplicationContext...");
         this.apiClient = new ApiClient();
         this.cityService = new CityService(apiClient);
         this.distanceService = new DistanceService(apiClient);
