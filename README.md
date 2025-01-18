@@ -45,9 +45,11 @@ mvn clean install
 
 - Register for an API key on [OpenRouteService](https://openrouteservice.org/)
 - Add API key as an environment variable
-
-
-5.Run the Application.
+5. Navigate to the target directory
+```bash
+cd target
+```
+6. Run the Application.
 ```bash
 java -jar co2-calculator.jar --start <start city> --end <end city> --transportation-method <transportation method>
 ```
