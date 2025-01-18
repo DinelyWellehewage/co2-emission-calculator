@@ -29,25 +29,25 @@ The **Co2 Emission Calculator** is a Java-based application designed to estimate
 ### ⚙️ Build
 Follow the steps outlined below to get started.
 
-1. CLone the repository
+1. CLone the repository.
 ```bash
 git clone https://github.com/DinelyWellehewage/co2-emission-calculator.git
 ```
-2. Navigate to the Project Directory
+2. Navigate to the Project Directory.
 ```bash
 cd co2-emission-calculator
 ```
-3. Build the Application
+3. Build the Application.
 ```bash
 mvn clean install
 ```
-4. Configure API key
+4. Configure API key.
 
 - Register for an API key on [OpenRouteService](https://openrouteservice.org/)
 - Add API key as an environment variable
 
 
-5.Run the Application
+5.Run the Application.
 ```bash
 java -jar co2-calculator.jar --start <start city> --end <end city> --transportation-method <transportation method>
 ```
