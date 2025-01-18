@@ -42,7 +42,6 @@ cd co2-emission-calculator
 mvn clean install
 ```
 4. Configure API key.
-
 - Register for an API key on [OpenRouteService](https://openrouteservice.org/)
 - Add API key as an environment variable
 5. Navigate to the target directory

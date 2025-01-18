@@ -1,8 +1,11 @@
 package com.dev.emissioncalculator.model.request;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MatrixRequest {
 
     private List<List<Double>> locations;
