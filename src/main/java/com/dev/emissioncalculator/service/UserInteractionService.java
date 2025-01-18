@@ -32,6 +32,7 @@ public class UserInteractionService {
             System.out.println(String.format("%d - %s | Country: %s | Region: %s",
                     i + 1, location.getCoordinates(), location.getCountry(), location.getRegion()));
         }
+
         return getUserSelectedIndex(coordinates.size());
     }
 
@@ -43,6 +44,11 @@ public class UserInteractionService {
      */
 
     private int getUserSelectedIndex(int maxIndex) {
+        //if only one coordinate is available, there is no need to prompt the user for input
+        if (maxIndex==1){
+            return 0;
+        }
+
         Scanner scanner = new Scanner(System.in);
         int selectedIndex = -1;
         while (selectedIndex < 0 || selectedIndex >= maxIndex) {
