@@ -37,6 +37,7 @@ public class CO2EmissionService {
      * @param transportationMethod the mode of transportation
      * @return the calculated CO2 emissions as a formatted string
      */
+
     public String calculateCo2Emissions(String startCity, String endCity, String transportationMethod) {
         try {
             VehicleType vehicleType = handleTransportationMethod(transportationMethod);
@@ -111,6 +112,7 @@ public class CO2EmissionService {
      * @return the corresponding VehicleType enum
      * @throws InvalidInputException if transportation method is invalid
      */
+
     private VehicleType handleTransportationMethod(String transportationMethod) {
         logger.debug("Handling transportation method: {}", transportationMethod);
         try {

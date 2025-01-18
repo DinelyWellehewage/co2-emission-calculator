@@ -71,6 +71,7 @@ public class ApiClient {
      * @return the deserialized response body
      * @throws ApiClientException if the request fails or the response cannot be processed
      */
+
     public <T> T sendPostRequest(String urlString, String body, String apiKey, Class<T> responseType) {
         try {
             URI uri = URI.create(urlString);
@@ -100,6 +101,7 @@ public class ApiClient {
      * @return the deserialized response body
      * @throws ApiClientException if response status is not 200 or JSON processing fails
      */
+
     private <T> T handleResponse(HttpResponse<String> response, Class<T> responseType) {
         logger.debug("Handling HTTP response, Status Code: {},Body: {}", response.statusCode(), response.body());
         if (response.statusCode() == 200) {

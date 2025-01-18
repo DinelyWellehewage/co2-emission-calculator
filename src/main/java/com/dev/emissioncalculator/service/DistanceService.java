@@ -113,6 +113,5 @@ public class DistanceService {
             logger.error("Error occurred while serializing request payload for coordinates: {}, Error: {}", coordinates, e.getMessage());
             throw new ApiClientException("Error occurred while fetching distance matrix: ", e);
         }
-
     }
 }

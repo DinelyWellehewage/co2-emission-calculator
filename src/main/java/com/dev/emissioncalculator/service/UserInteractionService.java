@@ -68,6 +68,4 @@ public class UserInteractionService {
         }
         return selectedIndex;
     }
-
-
 }
