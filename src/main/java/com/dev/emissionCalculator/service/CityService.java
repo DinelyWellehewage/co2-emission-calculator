@@ -4,6 +4,8 @@ import com.dev.emissionCalculator.client.ApiClient;
 import com.dev.emissionCalculator.model.response.GeoCodingResponse;
 import com.dev.emissionCalculator.model.response.LocationInfo;
 import com.dev.emissionCalculator.util.exception.ApiClientException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -25,6 +27,8 @@ import static com.dev.emissionCalculator.util.constant.AppConstant.LAYER_LOCALIT
 
 public class CityService {
 
+    private static final Logger logger = LoggerFactory.getLogger(CityService.class);
+
     private ApiClient apiClient;
 
     public CityService(ApiClient apiClient) {
@@ -32,23 +36,27 @@ public class CityService {
     }
 
     /**
-     *Retrieves the geographical information for a given city name
+     *Retrieves the geographical information for a given city name.
      *
-     * @param cityName name of the city to fetch coordinates
+     * @param cityName the name of the city to fetch coordinates
      * @return a list of objects containing location information
      * @throws ApiClientException if an error occurs during API request or response processing
      */
 
     public List<LocationInfo> getCityCoordinates(String cityName) {
-
+        logger.info("Fetching coordinates for city: {}",cityName);
         try {
             String urlString = String.format("%s?api_key=%s&text=%s&layers=%s",
                     GEOCODE_BASE_URL,
                     URLEncoder.encode(APIKEY, StandardCharsets.UTF_8),
                     URLEncoder.encode(cityName, StandardCharsets.UTF_8),
                     URLEncoder.encode(LAYER_LOCALITY, StandardCharsets.UTF_8));
+            logger.debug("Constructed Geocode API URL: {}",urlString);
+
             GeoCodingResponse geoCodingResponse = apiClient.sendGetRequest(urlString, GeoCodingResponse.class);
-            return Optional.ofNullable(geoCodingResponse)
+            logger.info("Received response for city: {}",cityName);
+
+            List<LocationInfo> locationInfos = Optional.ofNullable(geoCodingResponse)
                     .map(GeoCodingResponse::getFeatures)
                     .filter(features -> !features.isEmpty())
                     .map(features -> features.stream()
@@ -59,7 +67,13 @@ public class CityService {
                             ))
                             .collect(Collectors.toList()))
                     .orElse(Collections.emptyList());
+
+            logger.info("Found {} locations for city: {}",locationInfos.size(),cityName);
+            logger.debug("Locations: {}",locationInfos);
+
+            return locationInfos;
         } catch (Exception e) {
+            logger.error("Error fetching coordinates for city: {}",cityName,e);
             throw new ApiClientException("Error fetching coordinates for city: " + e.getMessage());
         }
     }
