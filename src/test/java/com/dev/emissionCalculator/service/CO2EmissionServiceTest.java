@@ -49,8 +49,8 @@ class CO2EmissionServiceTest {
 
         when(cityService.getCityCoordinates(startCity)).thenReturn(hamburgCoordinates);
         when(cityService.getCityCoordinates(endCity)).thenReturn(berlinCoordinates);
-        when(userInteractionService.displayCityCoordinates(hamburgCoordinates)).thenReturn(0);
-        when(userInteractionService.displayCityCoordinates(berlinCoordinates)).thenReturn(0);
+        when(userInteractionService.displayCityCoordinates(hamburgCoordinates,startCity)).thenReturn(0);
+        when(userInteractionService.displayCityCoordinates(berlinCoordinates,endCity)).thenReturn(0);
         when(distanceService.getDistanceMatrix(any())).thenReturn(distance);
 
         String emission = co2EmissionService.calculateCo2Emissions(startCity, endCity, transportationMethod);

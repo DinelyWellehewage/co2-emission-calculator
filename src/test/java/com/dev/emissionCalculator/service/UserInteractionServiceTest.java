@@ -25,13 +25,13 @@ class UserInteractionServiceTest {
                 new LocationInfo(List.of(10.007046, 53.576158), "Germany", "Hamburg"),
                 new LocationInfo(List.of(13.407032, 52.524932), "Germany", "Berlin")
         );
-
+        String cityName = "Hamburg";
         String input = "1";
         InputStream stream = System.in;
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         try {
-            int selectedIndex = userInteractionService.displayCityCoordinates(locationInfos);
-            Assertions.assertEquals(1, selectedIndex);
+            int selectedIndex = userInteractionService.displayCityCoordinates(locationInfos,cityName);
+            Assertions.assertEquals(0, selectedIndex);
         } finally {
             System.setIn(stream);
         }
@@ -43,12 +43,13 @@ class UserInteractionServiceTest {
                 new LocationInfo(List.of(10.007046, 53.576158), "Germany", "Hamburg"),
                 new LocationInfo(List.of(13.407032, 52.524932), "Germany", "Berlin")
         );
+        String cityName = "Hamburg";
 
-        String input = "invalid\n3\n0\n";
+        String input = "invalid\n3\n1\n";
         InputStream stream = System.in;
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         try {
-            int selectedIndex = userInteractionService.displayCityCoordinates(locationInfos);
+            int selectedIndex = userInteractionService.displayCityCoordinates(locationInfos,cityName);
             Assertions.assertEquals(0, selectedIndex);
         } finally {
             System.setIn(stream);

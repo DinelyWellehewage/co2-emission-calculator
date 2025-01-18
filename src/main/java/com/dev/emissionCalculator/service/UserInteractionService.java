@@ -19,12 +19,13 @@ public class UserInteractionService {
      * @return index of the selected coordinate from the list
      */
 
-    public int displayCityCoordinates(List<LocationInfo> coordinates) {
-        System.out.println("Available Coordinates with Country and Region");
+    public int displayCityCoordinates(List<LocationInfo> coordinates,String cityName) {
+        System.out.println();
+        System.out.println(String.format("Available Coordinates for %s with Country and Region",cityName));
         for (int i = 0; i < coordinates.size(); i++) {
-            String country = coordinates.get(i).getCountry();
-            String region = coordinates.get(i).getRegion();
-            System.out.println(i + " - " + coordinates.get(i).getCoordinates()+" Country: "+country+" ; Region: "+region);
+            LocationInfo location = coordinates.get(i);
+            System.out.println(String.format("%d - %s | Country: %s | Region: %s",
+                    i+1, location.getCoordinates(), location.getCountry(), location.getRegion()));
         }
         return getUserSelectedIndex(coordinates.size());
     }
@@ -40,15 +41,15 @@ public class UserInteractionService {
         Scanner scanner = new Scanner(System.in);
         int selectedIndex = -1;
         while (selectedIndex<0 || selectedIndex>=maxIndex) {
-            System.out.println("Select a coordinate (0 to " + (maxIndex-1) + "): (enter index):");
-            if (scanner.hasNextInt()){
-                selectedIndex = scanner.nextInt();
+            System.out.println(String.format("Select a coordinate (1 to %d):",(maxIndex)));
+            String input = scanner.nextLine().trim();
+            if (!input.isEmpty() && input.matches("\\d+")){
+                selectedIndex = Integer.parseInt(input)-1;
                 if (selectedIndex<0 || selectedIndex>=maxIndex){
-                    System.out.println("Invalid Index. Try again.");
+                    System.out.println("Invalid Index.Please Try again.");
                 }
             }else{
                 System.out.println("Invalid input. Please enter a number");
-                scanner.next();
             }
         }
         return selectedIndex;

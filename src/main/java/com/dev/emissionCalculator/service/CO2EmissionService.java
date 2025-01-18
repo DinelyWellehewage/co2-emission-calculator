@@ -37,11 +37,7 @@ public class CO2EmissionService {
         try {
             VehicleType vehicleType = handleTransportationMethod(transportationMethod);
 
-            System.out.println("");
-            System.out.println("Start City Location Information");
             List<Double> selectedStartCityCoordinates = selectCityCoordinate(startCity);
-            System.out.println("");
-            System.out.println("End City Location Information");
             List<Double> selectedEndCityCoordinates = selectCityCoordinate(endCity);
 
             double distance = getDistance(selectedStartCityCoordinates, selectedEndCityCoordinates);
@@ -70,8 +66,7 @@ public class CO2EmissionService {
         if (cityCoordinates.isEmpty()) {
             throw new InvalidInputException("No coordinates found for city: " + cityName);
         }
-        System.out.println(cityName + " Coordinates ");
-        int cityIndex = userInteractionService.displayCityCoordinates(cityCoordinates);
+        int cityIndex = userInteractionService.displayCityCoordinates(cityCoordinates,cityName);
         LocationInfo selectedLocationInfo = cityCoordinates.get(cityIndex);
         return selectedLocationInfo.getCoordinates();
     }
