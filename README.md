@@ -2,6 +2,7 @@
 
 The **Co2 Emission Calculator** is a Java-based application designed to estimate the CO2-equivalent emissions produced when travelling a specified distance using a chosen mode of transportation.
 
+![CO2-Calculator](https://github.com/user-attachments/assets/851b0f8c-65b0-4cb2-86d2-204a7b08a1f0)
 ---
 ## Features
 
@@ -76,7 +77,6 @@ Command-line arguments can be put in any order and either use an equal sign(=) o
 | Public Transport | `bus-default`, `train-default`                                                              |
 
 
-![CO2-Calculator](https://github.com/user-attachments/assets/851b0f8c-65b0-4cb2-86d2-204a7b08a1f0)
 
 ---
 ### 🚀 Future Enhancements
