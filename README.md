@@ -76,37 +76,7 @@ Command-line arguments can be put in any order and either use an equal sign(=) o
 | Public Transport | `bus-default`, `train-default`                                                              |
 
 
-Example:
-
-```text
-CO2 Emission Calculator
--------------------------
-Entered Start City: Hamburg
-Entered End City: Berlin
-Entered Transportation method: diesel-car-medium
-
-Start City Location Information
-Hamburg Coordinates 
-Available Coordinates with Country and Region
-0 - [10.007046, 53.576158] Country: Germany ; Region: Hamburg
-1 - [-87.953926, 43.316682] Country: United States ; Region: Wisconsin
-2 - [-78.832812, 42.718672] Country: United States ; Region: New York
-Select a coordinate (0 to 10): (enter index):
-0
-
-End City Location Information
-Berlin Coordinates 
-Available Coordinates with Country and Region
-0 - [13.407032, 52.524932] Country: Germany ; Region: Berlin
-1 - [-88.53333, 13.5] Country: El Salvador ; Region: Usulután
-2 - [-71.259903, 44.487158] Country: United States ; Region: New Hampshire
-Select a coordinate (0 to 10): (enter index):
-0
-Your trip caused 49.2kg of CO2-equivalent.
-```
-
 ![CO2-Calculator](https://github.com/user-attachments/assets/851b0f8c-65b0-4cb2-86d2-204a7b08a1f0)
-
 
 ---
 ### Future Enhancements
